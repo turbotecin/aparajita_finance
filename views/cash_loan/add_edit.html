@@ -20,7 +20,26 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="customerName">Aadhar/PAN/Mobile No</label>
-                                        <input type="text" class="form-control" id="customerName" ng-model="formData.customerName" aria-describedby="textHelp" placeholder="Enter Aadhar/PAN/Mobile No">
+                                        <input type="text" class="form-control" id="customerName" ng-model="formData.customerInfo" aria-describedby="textHelp" ng-blur="getCustomerDetails()" placeholder="Enter Aadhar/PAN/Mobile No">
+                                        <small id="textHelp" class="form-text text-muted mb-20">Put Aadhar No or PAN No or Mobile No and press TAB to find the customer exist or not.</small>
+                                        <!-- <small id="textHelp" class="form-text text-muted" ng-show="customerInfo">
+                                            <div ng-if="checkEmpty(customerData)">No customer found!!</div>
+                                            <div ng-if="!checkEmpty(customerData)">
+                                                Customer Name : {{customerData.name}}</br>
+                                                Customer Address : {{customerData.address}}</br>
+                                                Customer Phone No : {{customerData.phone_no}}
+                                            </div>
+                                        </small> -->
+                                        <div ng-show="customerInfo">
+                                            <div ng-if="!checkEmpty(customerData)" class="alert alert-success mb-0" role="alert">
+                                                <h4 class="alert-heading">Existing Customer!</h4>
+                                                <p>
+                                                    {{customerData.name}} [{{customerData.phone_no}}]</br>
+                                                    {{customerData.address}}</br>
+                                                </p>
+                                            </div>
+                                            <div ng-if="checkEmpty(customerData)" class="alert alert-danger" role="alert">No customer found!!</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +63,7 @@
                                         <input type="number" class="form-control" id="disbursementAmount" ng-model="formData.disbursementAmount" readonly="readonly" aria-describedby="textHelp">
                                         <small id="textHelp" class="form-text text-muted">Actual Loan Amount - Processing Charge</small> 
                                     </div>
-                                    <button type="button" ng-click="submit_form()" class="btn btn-primary">Submit</button>
+                                    <button type="button" ng-if="customerInfo && !checkEmpty(customerData)" ng-click="submit_form()" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>

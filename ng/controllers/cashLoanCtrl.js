@@ -7,27 +7,66 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     }
     
     $scope.setCurPage("Cash Loan");
-	console.log($scope.cur_page, $scope.action, moment());
+	// console.log($scope.cur_page, $scope.action, moment());
 
 	if($scope.checkEmpty($rootScope.appData)){
-        console.log("App Data is empty");
+        // console.log("App Data is empty");
         $scope.loadAppData();
     }else{
-        console.log("App data in not empty");
+        // console.log("App data in not empty");
     }
     
+    $scope.customerInfo = false;
     $scope.form = {};
     $scope.formError = {};
     $scope.formData = {};
-    $scope.customerList = {};
+    $scope.customerData = {};
+    $scope.customerData.message = "";
+    $scope.cashLoanList = {};
     
     $scope.init_formData = function(){
         $scope.formData.customerId = 1;
+        $scope.formData.customerInfo = "";
         $scope.formData.date = "";
         $scope.formData.loanAmount = 0;
         $scope.formData.loanProcessingCharge = 0;
         $scope.formData.disbursementAmount = 0;
         $scope.formData.loanCategoryId = 2; // 2 = Cash Loan
+    }
+
+    $scope.getCustomerDetails = function() {
+        $scope.searchingRef = $scope.formData.customerInfo;
+        // console.log($scope.searchingRef);
+        $http.get($rootScope.appLaravelApiUrl + '/customers/'+$scope.searchingRef)
+        .then(function(data) {
+            var data = data.data;
+            // console.log(data);
+
+            // $scope.customerInfo = (data.status == 'success') ? true : false;
+            $scope.customerInfo = true;
+            $scope.customerData = data.response;
+            console.log($scope.customerInfo, $scope.customerData);
+
+            /* if (data.status == 'success') 
+            {
+                $scope.customerInfo = true;
+                $scope.customerData = data.response;
+                console.log($scope.customerData);
+            } 
+            else if (data.status == 'error') 
+            {
+                $scope.customerInfo = false;
+                $scope.customerData = data.response;
+                console.log($scope.customerData);
+            } */
+        }, function(response) {
+            console.log("Errror Loading ", response);
+        })
+        .catch(function onError(response) {
+
+            console.log("Network Errror ", response);
+        })
+        .finally(function() {});
     }
 
     $scope.calculateDisbursementAmount = function () {

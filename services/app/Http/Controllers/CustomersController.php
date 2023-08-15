@@ -82,9 +82,16 @@ class CustomersController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function show(Customers $customers)
+    public function show($data)
     {
-
+        $customer = Customers::where('phone_no',$data)->orWhere('aadhar_no',$data)->orWhere('pan_no',$data)->first();
+        
+        $status = is_null($customer) ? "error" : "success";
+ 
+        return response()->json([
+            'status' => $status,
+            'response'  => $customer,
+        ], 200);
     }
 
     /**
