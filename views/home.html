@@ -1,0 +1,212 @@
+<div class="row align-items-center">
+    <div class="col-6">
+        <div class="text-size-19 font-weight-normal mt-20">Welcome back {{ user.firstname }}!</div>
+        <div>Here's your current sales reports from, 01 June 2019 until 18 June 2019</div>
+    </div>
+    <div class="col-6">
+        <div class="form-inline justify-content-end mt-35">
+            <div class="content-box position-relative rounded-half-circle fw-170">
+                <input type="text" class="font-weight-normal form-control border-0 bg-transparent" value="02/06/2018">
+                <i class="icon mdi mdi-calendar-multiselect text-size-16 text-color-2 position-absolute post-5 posr-10"></i> 
+            </div>
+            <div class="d-none d-lg-block mx-10">to</div>
+            <div class="content-box position-relative rounded-half-circle fw-170 mt-2 mt-lg-0">
+                <input type="text" class="font-weight-normal form-control border-0 bg-transparent" value="02/06/2019">
+                <i class="icon mdi mdi-calendar-multiselect text-size-16 text-color-2 position-absolute post-5 posr-10"></i> 
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row sm-gutter mt-20">
+    <div class="col-12 col-lg-8 col-xl-6">
+        <div class="report-box box-1 content-box mt-15 position-relative z-index-2 fadeInUp animated">
+            <div class="row no-gutters px-20 py-15 align-items-center">
+                <div class="col-6 col-md-8 col-lg-9 box-title">Earnings</div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="dropdown text-right">
+                        <i class="mdi mdi-dots-vertical text-size-20 mmr-8" role="button" aria-hidden="true" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i> 
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1"> <a class="dropdown-item" href="#">Daily</a> <a class="dropdown-item" href="#">Weekly</a> <a class="dropdown-item" href="#">Monthly</a> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-20 mt-40">
+                <div class="text-size-40 font-weight-normal">$49,374.21</div>
+                <div class="text-size-15 font-weight-normal">Total Earnings</div>
+                <div class="text-color-2 mt-10">Total value of your sales, after taxes: <span class="font-weight-normal">$45,281.11</span></div>
+                <a href="#" class="btn fw-sm-110 mb-5 btn-outline-primary rounded-half-circle font-weight-normal mt-20 p-6">View Sales</a> 
+            </div>
+            <div class="w-100 position-absolute posb-0 overflow-hidden rounded">
+                <div class="mmx-20 mmb-10">
+                    <canvas id="dashboard-line-chart-1" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4 col-xl-3">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-12 d-flex d-lg-flex">
+                <div class="report-box box-2 auto-height-lg content-box mt-15 position-relative fadeInUp animated">
+                    <div class="px-8 py-1 text-size-12 rounded font-weight-normal position-absolute posmt-8 posr-15 bg-success text-white">+18%</div>
+                    <div class="px-20 pt-20">
+                        <div class="text-size-30 font-weight-normal">4.5m</div>
+                        <div class="text-size-12 text-color-2 font-weight-normal">THIS WEEK</div>
+                    </div>
+                    <div class="w-100 position-absolute posb-10">
+                        <div class="pl-3 pr-10">
+                            <canvas id="dashboard-bar-chart-1" height="110"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-12">
+                <div class="report-box box-3 content-box mt-15 p-20 position-relative fadeInUp animated">
+                    <div class="text-size-24 font-weight-normal">210</div>
+                    <div class="text-size-12 text-color-2 font-weight-normal">INSTAGRAM POSTS</div>
+                    <div class="progress my-7">
+                        <div class="progress-bar progress-bar-1 w-34" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="text-size-24 font-weight-normal mt-20">4.1k</div>
+                    <div class="text-size-12 text-color-2 font-weight-normal">TWITTER FOLOWERS</div>
+                    <div class="progress my-7">
+                        <div class="progress-bar progress-bar-2 w-21" role="progressbar" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="text-size-24 font-weight-normal mt-20">13.5k</div>
+                    <div class="text-size-12 text-color-2 font-weight-normal">INSTAGRAM FOLLOWING</div>
+                    <div class="progress my-7">
+                        <div class="progress-bar progress-bar-1 w-34" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-xl-3">
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-12">
+                <div class="content-box mt-15 p-25 position-relative fadeInLeft animated">
+                    <div class="text-size-12 font-weight-normal text-color-2">CURRENT GOLD RATE</div>
+                    <div class="text-size-40 font-weight-normal">{{appData.gold_rate}}k</div>
+                    <div class="d-flex text-success"> <i class="text-size-30 lh-24 icon mdi mdi-menu-up"></i> <span class="text-size-16 font-weight-normal">+45%</span> </div>
+                </div>
+
+                <div class="report-box box-3 content-box mt-15 p-20 position-relative fadeInUp animated">
+                    <div class="text-size-24 font-weight-normal">$14.010,15</div>
+                    <div class="text-size-12 text-color-2 font-weight-normal">BALANCE</div>
+                    <div class="progress my-7">
+                        <div class="progress-bar progress-bar-1 w-21" role="progressbar" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="text-size-24 font-weight-normal mt-20">302</div>
+                    <div class="text-size-12 text-color-2 font-weight-normal">SALES</div>
+                    <div class="progress my-7">
+                        <div class="progress-bar progress-bar-2 w-32" role="progressbar" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="text-size-24 font-weight-normal mt-20">13.5k</div>
+                    <div class="text-size-12 text-color-2 font-weight-normal">INSTAGRAM FOLLOWING</div>
+                    <div class="progress my-7">
+                        <div class="progress-bar progress-bar-1 w-34" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-12 d-flex d-lg-flex">
+                <div class="report-box box-2 auto-height-xl content-box mt-15 position-relative mt-15 fadeInUp animated">
+                    <div class="px-8 py-1 text-size-12 rounded font-weight-normal position-absolute posmt-8 posr-15 bg-success text-white">+25%</div>
+                    <div class="px-20 pt-20">
+                        <div class="text-size-30 font-weight-normal">1.9m</div>
+                        <div class="text-size-12 text-color-2 font-weight-normal">THIS MONTH</div>
+                    </div>
+                    <div class="w-100 position-absolute posb-10">
+                        <div class="pl-3 pr-10">
+                            <canvas id="dashboard-bar-chart-2" height="110"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <div class="col-12 col-md-8 col-xl-9">
+        <div class="content-box mt-15 position-relative z-index-2 fadeInUp animated">
+            <div class="row no-gutters px-20 py-15 align-items-center">
+                <div class="col-6 col-md-5 col-xl-9 box-title">Sales Report</div>
+                <div class="col-6 col-md-7 col-xl-3">
+                    <ul class="nav nav-pills nav-light d-none d-sm-flex justify-content-end">
+                        <li class="nav-item"> <a class="nav-link active" href="#">Daily</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="#">Weekly</a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="#">Monthly</a> </li>
+                    </ul>
+                    <div class="dropdown text-right d-sm-none">
+                        <i class="mdi mdi-dots-vertical text-size-22" role="button" aria-hidden="true" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i> 
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2"> <a class="dropdown-item" href="#">Daily</a> <a class="dropdown-item" href="#">Weekly</a> <a class="dropdown-item" href="#">Monthly</a> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-20 pb-20">
+                <canvas id="dashboard-line-chart-2" height="145"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 col-xl-3">
+        <div class="content-box mt-15 position-relative fadeInUp animated">
+            <div class="box-title px-20 py-15">Sales by Category</div>
+            <div class="mt-10 mb-25">
+                <canvas id="dashboard-donut-chart" height="250"></canvas>
+            </div>
+            <div class="px-20 pb-15">
+                <div class="d-flex align-items-center mt-10">
+                    <div class="fw-6 fh-6 d-inline-block rounded-circle bg-success"></div>
+                    <div class="ml-10">Food &amp; Drink</div>
+                </div>
+                <div class="d-flex align-items-center mt-10">
+                    <div class="fw-6 fh-6 d-inline-block rounded-circle bg-warning"></div>
+                    <div class="ml-10">Electronic</div>
+                </div>
+                <div class="d-flex align-items-center mt-10">
+                    <div class="fw-6 fh-6 d-inline-block rounded-circle bg-danger"></div>
+                    <div class="ml-10">Smarphone &amp; Gadget</div>
+                </div>
+                <div class="d-flex align-items-center mt-10">
+                    <div class="fw-6 fh-6 d-inline-block rounded-circle bg-primary"></div>
+                    <div class="ml-10">Computer Accesories</div>
+                </div>
+                <div class="d-flex align-items-center mt-10">
+                    <div class="fw-6 fh-6 d-inline-block rounded-circle bg-warning"></div>
+                    <div class="ml-10">Charger</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    <div class="col-6 col-lg-3">
+        <div class="content-box mt-15 p-25 position-relative fadeInLeft animated">
+            <div class="text-size-12 font-weight-normal text-color-2">FACEBOOK POSTS</div>
+            <div class="text-size-40 font-weight-normal">127k</div>
+            <div class="d-flex text-success"> <i class="text-size-30 lh-24 icon mdi mdi-menu-up"></i> <span class="text-size-16 font-weight-normal">+45%</span> </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="content-box mt-15 p-25 position-relative fadeInLeft animated">
+            <div class="text-size-12 font-weight-normal text-color-2">INSTAGRAM VISITORS</div>
+            <div class="text-size-40 font-weight-normal">12k</div>
+            <div class="d-flex text-danger"> <i class="text-size-30 lh-24 icon mdi mdi-menu-up"></i> <span class="text-size-16 font-weight-normal">-5%</span> </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="content-box mt-15 p-25 position-relative fadeInRight animated">
+            <div class="text-size-12 font-weight-normal text-color-2">FACEBOOK COMMENTS</div>
+            <div class="text-size-40 font-weight-normal">47k</div>
+            <div class="d-flex text-success"> <i class="text-size-30 lh-24 icon mdi mdi-menu-up"></i> <span class="text-size-16 font-weight-normal">+45%</span> </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="content-box mt-15 p-25 position-relative fadeInRight animated">
+            <div class="text-size-12 font-weight-normal text-color-2">GOOGLE+ POSTS</div>
+            <div class="text-size-40 font-weight-normal">56k</div>
+            <div class="d-flex text-success"> <i class="text-size-30 lh-24 icon mdi mdi-menu-up"></i> <span class="text-size-16 font-weight-normal">+45%</span> </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="row align-items-center">
+    <div class="col-6">
+        <div class="text-size-19 font-weight-normal mt-20">Customers Details</div>
+        <div>All Customers with their contact details & loan details</div>
+    </div>
+    <div class="col-6">
+        <div class="form-inline justify-content-end mt-35">
+            <button type="button" ng-click="change_route('customer/add')" class="btn rounded-half-circle mb-5 btn-dark btn-sm">+ Customer</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="content-box mt-20 fadeInUp animated">
+            <div class="row no-gutters p-15 align-items-center">
+                <div class="col-12 box-title"></div>
+            </div>
+            <div class="px-15 pb-15">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Cust. Details</th>
+                            <th scope="col">KYC Details</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in customerList track by $index">
+                            <th scope="row">{{$index+1}}</th>
+                            <td>
+                                {{row.name}}</br>{{row.address}}</br>{{row.phone_no}}
+                            </td>
+                            <td>
+                                Aadhar No : {{row.aadhar_no}}</br>
+                                PAN No : {{row.pan_no}}</br>
+                                Votar Card No : {{row.votar_card_no}}
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                    <button type="button" class="btn btn-primary">Edit</button>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

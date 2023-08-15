@@ -1,0 +1,56 @@
+<form role="form" id="cashLoanForm" method="POST" autocomplete="off" accept-charset="UTF-8" name="form.thisForm" novalidate>
+    <div class="row">
+        <div class="col-12">
+            <div class="content-box fadeInUp animated">
+                <!-- <div class="row no-gutters p-15 align-items-center">
+                    <div class="col-12 box-title text-size-18">Cash Loan</div>
+                </div> -->
+                <div class="px-15 pb-15">
+                    <!-- <p>Proving Cash Loans in Market Area on weekly basis.</p> -->
+                    <div class="container">
+                        <div class="row mt-20 mb-20">
+                            <div class="col-12 col-md-6">
+                                <div class="row no-gutters p-15 align-items-center">
+                                    <div class="col-12 box-title">Customer Details</div>
+                                </div>
+                                <div class="px-15 pb-15">
+                                    <div class="form-group">
+                                        <label for="disbursementDate">Disbursement Date</label>
+                                        <input class="form-control" type="text" format="DD-MM-YYYY" ng-model="formData.date" ng-model-options="{ updateOn: 'blur' }" placeholder="Select a date..." moment-picker="formData.date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customerName">Aadhar/PAN/Mobile No</label>
+                                        <input type="text" class="form-control" id="customerName" ng-model="formData.customerName" aria-describedby="textHelp" placeholder="Enter Aadhar/PAN/Mobile No">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <div class="row no-gutters p-15 align-items-center">
+                                    <div class="col-12 box-title">Disbursement Details</div>
+                                </div>
+                                <div class="px-15 pb-15">
+                                    <div class="form-group">
+                                        <label for="loanAmount">Loan Amount</label>
+                                        <input type="number" class="form-control" id="loanAmount" ng-model="formData.loanAmount" aria-describedby="textHelp" placeholder="Loan Amount" ng-change="calculateDisbursementAmount()">
+                                        <small id="textHelp" class="form-text text-muted">Actual Loan Amount.</small> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="loanProcessingCharge">Processing Charge</label>
+                                        <input type="number" class="form-control" id="loanProcessingCharge" ng-model="formData.loanProcessingCharge" aria-describedby="textHelp" placeholder="Processing Charge" ng-change="calculateDisbursementAmount()">
+                                        <small id="textHelp" class="form-text text-muted">Processing charge will deduct from Actual Loan Amount at the time disbursement.</small> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disbursementAmount">Disbursement Amount</label>
+                                        <input type="number" class="form-control" id="disbursementAmount" ng-model="formData.disbursementAmount" readonly="readonly" aria-describedby="textHelp">
+                                        <small id="textHelp" class="form-text text-muted">Actual Loan Amount - Processing Charge</small> 
+                                    </div>
+                                    <button type="button" ng-click="submit_form()" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,51 @@
+<form role="form" id="customerForm" method="POST" autocomplete="off" accept-charset="UTF-8" name="form.thisForm" novalidate>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="content-box fadeInUp animated">
+                <div class="row no-gutters p-15 align-items-center">
+                    <div class="col-12 box-title">Customer Details</div>
+                </div>
+                <div class="px-15 pb-15">
+                    <div class="form-group">
+                        <label for="customerName">Name</label>
+                        <input type="text" class="form-control" id="customerName" ng-model="formData.customerName" aria-describedby="textHelp" placeholder="Enter text">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerAddress">Address</label>
+                        <textarea class="form-control" id="customerAddress" ng-model="formData.customerAddress" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhoneNo">Phone No</label>
+                        <input type="text" class="form-control" id="customerPhoneNo" ng-model="formData.customerPhoneNo" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your phone no with anyone else.</small> 
+                    </div>
+                    <button type="button" ng-click="submit_form()" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="content-box fadeInUp animated">
+                <div class="row no-gutters p-15 align-items-center">
+                    <div class="col-12 box-title">KYC Details</div>
+                </div>
+                <div class="px-15 pb-15">
+                    <div class="form-group">
+                        <label for="customerAadhar">Aadhar Card No</label>
+                        <input type="text" class="form-control" id="customerAadhar" ng-model="formData.customerAadhar" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your aadhard card no with anyone else.</small> 
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPan">PAN No</label>
+                        <input type="text" class="form-control" id="customerPan" ng-model="formData.customerPan" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your pan card no with anyone else.</small> 
+                    </div>
+                    <div class="form-group">
+                        <label for="customerVotarNo">Votar Card No</label>
+                        <input type="text" class="form-control" id="customerVotarNo" ng-model="formData.customerVotarNo" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your Votar card no with anyone else.</small> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

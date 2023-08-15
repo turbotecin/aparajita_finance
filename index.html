@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="AppController" lang="en">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <head>
+        <base href="{{appBaseUrl}}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="assets/js/main.js"></script>
+        <link rel="stylesheet" href="assets/css/main.css">
+        <title>{{appName}}</title>
+    </head>
+    <body id="AppController">
+      
+      <div ng-if="cur_page == 'login'" ng-view></div>
+      <div ng-if="cur_page != 'login'" id="main">
+        <div ng-include src="'views/sidebar/sidebar_left.html'"></div>
+        <div ng-include src="'views/sidebar/sidebar_top.html'"></div>
+        <div class="content-wrapper">
+          <div class="container">
+            <div class="box-layout">
+              <div class="main-layout full-width">
+                <ng-view></ng-view>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+
+      <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+      <script src="assets/vendors/angular-moment-picker/angular-moment-picker.min.js"></script>
+      <link href="assets/vendors/angular-moment-picker/angular-moment-picker.min.css" rel="stylesheet">
+
+      <script>
+        function loadScript(url, type, charset) {
+          document.write("<script defer type='text/javascript' src='" + url + "?v=" + Date.now() + "'><\/script>");
+        }
+        var type = "text/javascript"; var charset = "utf-8";
+			  loadScript("ng/app.js", type, charset);
+			  loadScript("ng/app_routes.js", type, charset);
+			  loadScript("ng/app_init.js", type, charset);
+			  loadScript("ng/app_helpers.js", type, charset);
+        loadScript("ng/app_basic.js", type, charset);
+
+			  loadScript("ng/controllers/loginCtrl.js", type, charset);
+			  loadScript("ng/controllers/homeCtrl.js", type, charset);
+			  loadScript("ng/controllers/goldLoanCtrl.js", type, charset);
+			  loadScript("ng/controllers/customerCtrl.js", type, charset);
+			  loadScript("ng/controllers/cashLoanCtrl.js", type, charset);
+      </script>
+
+    </body>
+</html>

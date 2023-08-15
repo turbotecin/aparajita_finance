@@ -1,0 +1,112 @@
+<form name="gold_loan" method="POST" role="form">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="content-box fadeInUp animated">
+                <div class="row no-gutters p-15 align-items-center">
+                    <div class="col-12 box-title">Customer Details</div>
+                </div>
+                <div class="px-15 pb-15">
+                    <div class="form-group">
+                        <label for="exampleInputText">Name</label>
+                        <input type="text" class="form-control" id="exampleInputText" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> 
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleTextarea">Address</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputText">Phone No</label>
+                        <input type="text" class="form-control" id="exampleInputText" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="content-box fadeInUp animated">
+                <div class="row no-gutters p-15 align-items-center">
+                    <div class="col-12 box-title">Customer Details</div>
+                </div>
+                <div class="px-15 pb-15">
+                    <div class="form-group">
+                        <label for="exampleInputText">Name</label>
+                        <input type="text" class="form-control" id="exampleInputText" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> 
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleTextarea">Address</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputText">Phone No</label>
+                        <input type="text" class="form-control" id="exampleInputText" aria-describedby="textHelp" placeholder="Enter text">
+                        <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="content-box mt-20 fadeInUp animated">
+                <div class="row no-gutters p-15 align-items-center">
+                    <div class="col-12 box-title">Product Details</div>
+                </div>
+                <div class="px-15 pb-15">
+                    <div class="form-row">
+                        <div class="form-group col-md-7">
+                            <label for="inputState">Product</label>
+                            <select id="inputState" class="form-control" ng-model="formData.productKey" ng-change="get_product_details()">
+                                <option value="" selected>Choose...</option>
+                                <option ng-repeat="(key, value) in appData.products track by $index" value="{{key}}">{{value.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="productQty">Qty</label>
+                            <input type="text" class="form-control" id="productQty" name="productQty" ng-model="formData.productQty">
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="productWeight">Weight</label>
+                            <input type="text" class="form-control" id="productWeight" name="productWeight" ng-model="formData.productWeight">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputState">Caret</label>
+                            <select id="inputState" class="form-control" ng-model="formData.caretKey" ng-change="get_caret_details()">
+                                <option value="" selected>Choose...</option>
+                                <option ng-repeat="(key, value) in appData.carets track by $index" value="{{key}}">{{value.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-1 mt-28">
+                            <button type="button" class="btn btn-primary" ng-click="addProductRow()">+</button>
+                        </div>
+                    </div>
+                    <table class="table" ng-if="!checkEmpty(product_list)">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Caret</th>
+                                <th scope="col">Loan Value</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in product_list track by $index">
+                                <th scope="row">{{$index+1}}</th>
+                                <td>{{row.productName}}</td>
+                                <td>{{row.productQty}}</td>
+                                <td>{{row.productWeight}}</td>
+                                <td>{{row.caretName}}</td>
+                                <td>{{row.goldValue}}</td>
+                                <td><button type="button" class="btn fw-sm-120 mb-5 btn-danger" ng-click="removeProductRow($index)">X</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
