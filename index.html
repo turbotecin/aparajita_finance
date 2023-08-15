@@ -10,7 +10,6 @@
         <title>{{appName}}</title>
     </head>
     <body id="AppController">
-      
       <div ng-if="cur_page == 'login'" ng-view></div>
       <div ng-if="cur_page != 'login'" id="main">
         <div ng-include src="'views/sidebar/sidebar_left.html'"></div>
