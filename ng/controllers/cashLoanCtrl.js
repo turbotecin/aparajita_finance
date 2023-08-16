@@ -25,13 +25,13 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     $scope.cashLoanList = {};
     
     $scope.init_formData = function(){
-        $scope.formData.customerId = 1;
-        $scope.formData.customerInfo = "";
+        $scope.formData.loanCategoryId = 2; // 2 = Cash Loan
         $scope.formData.date = "";
+        $scope.formData.customerId = "";
+        $scope.formData.customerInfo = "";
         $scope.formData.loanAmount = 0;
         $scope.formData.loanProcessingCharge = 0;
         $scope.formData.disbursementAmount = 0;
-        $scope.formData.loanCategoryId = 2; // 2 = Cash Loan
     }
 
     $scope.getCustomerDetails = function() {
@@ -45,6 +45,7 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
             // $scope.customerInfo = (data.status == 'success') ? true : false;
             $scope.customerInfo = true;
             $scope.customerData = data.response;
+            $scope.formData.customerId = $scope.customerData.id;
             console.log($scope.customerInfo, $scope.customerData);
 
             /* if (data.status == 'success') 

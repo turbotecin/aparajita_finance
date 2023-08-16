@@ -2,13 +2,9 @@
     <div class="row">
         <div class="col-12">
             <div class="content-box fadeInUp animated">
-                <!-- <div class="row no-gutters p-15 align-items-center">
-                    <div class="col-12 box-title text-size-18">Cash Loan</div>
-                </div> -->
                 <div class="px-15 pb-15">
-                    <!-- <p>Proving Cash Loans in Market Area on weekly basis.</p> -->
                     <div class="container">
-                        <div class="row mt-20 mb-20">
+                        <div class="row mt-20">
                             <div class="col-12 col-md-6">
                                 <div class="row no-gutters p-15 align-items-center">
                                     <div class="col-12 box-title">Customer Details</div>
@@ -22,18 +18,11 @@
                                         <label for="customerName">Aadhar/PAN/Mobile No</label>
                                         <input type="text" class="form-control" id="customerName" ng-model="formData.customerInfo" aria-describedby="textHelp" ng-blur="getCustomerDetails()" placeholder="Enter Aadhar/PAN/Mobile No">
                                         <small id="textHelp" class="form-text text-muted mb-20">Put Aadhar No or PAN No or Mobile No and press TAB to find the customer exist or not.</small>
-                                        <!-- <small id="textHelp" class="form-text text-muted" ng-show="customerInfo">
-                                            <div ng-if="checkEmpty(customerData)">No customer found!!</div>
-                                            <div ng-if="!checkEmpty(customerData)">
-                                                Customer Name : {{customerData.name}}</br>
-                                                Customer Address : {{customerData.address}}</br>
-                                                Customer Phone No : {{customerData.phone_no}}
-                                            </div>
-                                        </small> -->
                                         <div ng-show="customerInfo">
                                             <div ng-if="!checkEmpty(customerData)" class="alert alert-success mb-0" role="alert">
                                                 <h4 class="alert-heading">Existing Customer!</h4>
                                                 <p>
+                                                    Customer ID : {{customerData.id}}</br>
                                                     {{customerData.name}} [{{customerData.phone_no}}]</br>
                                                     {{customerData.address}}</br>
                                                 </p>

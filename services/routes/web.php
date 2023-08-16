@@ -27,4 +27,4 @@ Route::resource('products', ProductController::class);
 Route::resource('customers', CustomersController::class);
 Route::resource('loans', LoanController::class);
 
-Route::get('/appdata', [App\Http\Controllers\DashboardController::class, 'list']);
+Route::get('/appdata', [DashboardController::class, 'list']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Loan;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
+use DB;
 
 class LoanController extends Controller
 {
@@ -15,10 +16,22 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::all();
+        /* $loans = Loan::all();
         return response()->json([
             'status' => "success", 
             'response' => $loans, 
+        ], 200); */
+
+        $data = DB::table('loans')
+                    ->leftjoin('customers','customers.id','=','loans.customer_id')
+                    ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
+                    ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
+                    ->select('loans.id', 'loans.customer_id', 'loans.disbursement_date', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
+                    ->where('loans.loan_category_id', '=', 2)
+                    ->get();
+        return response()->json([
+            'status' => "success", 
+            'response' => $data, 
         ], 200);
     }
 
