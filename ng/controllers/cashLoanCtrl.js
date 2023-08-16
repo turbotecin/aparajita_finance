@@ -76,7 +76,8 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 	
 	$scope.get_data = function() 
     {
-        $http.get($rootScope.appLaravelApiUrl + '/loans')
+        // 2 = Cash Loan
+        $http.get($rootScope.appLaravelApiUrl + '/loans/2')
         .then(function(data) {
             var data = data.data;
             console.log(data);
@@ -118,7 +119,7 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 
             }
 
-            if (!$rootScope.checkEmpty(data.msg)) $rootScope.showMessage(data.msg, data.status, true);
+            // if (!$rootScope.checkEmpty(data.msg)) $rootScope.showMessage(data.msg, data.status, true);
 
         }, function(response) 
         {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Loan;
 use App\Models\Transactions;
+use App\Models\LoanProducts;
 use Illuminate\Http\Request;
 use DB;
 
@@ -16,13 +17,7 @@ class LoanController extends Controller
      */
     public function index()
     {
-        /* $loans = Loan::all();
-        return response()->json([
-            'status' => "success", 
-            'response' => $loans, 
-        ], 200); */
-
-        $data = DB::table('loans')
+        /* $data = DB::table('loans')
                     ->leftjoin('customers','customers.id','=','loans.customer_id')
                     ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
                     ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
@@ -32,7 +27,7 @@ class LoanController extends Controller
         return response()->json([
             'status' => "success", 
             'response' => $data, 
-        ], 200);
+        ], 200); */
     }
 
     /**
@@ -55,12 +50,20 @@ class LoanController extends Controller
     {
         $data = $request->inputData;
 
-        $customerId = $data['customerId'];
-        $disbursementDate = $data['disbursementDate'];
-        $loanAmount = $data['loanAmount'];
-        $loanProcessingCharge = $data['loanProcessingCharge'];
-        $disbursementAmount = $data['disbursementAmount'];
-        $loanCategoryId = $data['loanCategoryId'];
+        $customerId = !empty($data['customerId']) ? $data['customerId'] : "";
+        $disbursementDate = !empty($data['disbursementDate']) ? $data['disbursementDate'] : "";
+        $loanAmount = !empty($data['loanAmount']) ? $data['loanAmount'] : "";
+        $loanProcessingCharge = !empty($data['loanProcessingCharge']) ? $data['loanProcessingCharge'] : "";
+        $loanAdditionalCharge = !empty($data['loanAdditionalCharge']) ? $data['loanAdditionalCharge'] : "";
+        $disbursementAmount = !empty($data['disbursementAmount']) ? $data['disbursementAmount'] : "";
+        $loanCategoryId = !empty($data['loanCategoryId']) ? $data['loanCategoryId'] : "";
+        $productList = !empty($data['productList']) ? $data['productList'] : "";
+
+        /* return response()->json([
+            'status' => "error",
+            'msg' => $productList 
+        ], 200);
+        exit; */
 
         $Loan = new Loan;
         $Loan->disbursement_date = $disbursementDate;
@@ -80,14 +83,43 @@ class LoanController extends Controller
             $loanDisbursementEntry->status = 1;
             $loanDisbursementEntry->save();
 
-            $processingChargeEntry = new Transactions;
-            $processingChargeEntry->date = $disbursementDate;
-            $processingChargeEntry->customer_id = $customerId;
-            $processingChargeEntry->loan_id = $loanId;
-            $processingChargeEntry->ledger_id = 2; // 2 = Processing Charge
-            $processingChargeEntry->amount = $loanProcessingCharge;
-            $processingChargeEntry->status = 1;
-            $processingChargeEntry->save();
+            if(!empty($loanProcessingCharge)){
+                $processingChargeEntry = new Transactions;
+                $processingChargeEntry->date = $disbursementDate;
+                $processingChargeEntry->customer_id = $customerId;
+                $processingChargeEntry->loan_id = $loanId;
+                $processingChargeEntry->ledger_id = 2; // 2 = Processing Charge
+                $processingChargeEntry->amount = $loanProcessingCharge;
+                $processingChargeEntry->status = 1;
+                $processingChargeEntry->save();
+            }
+
+            if(!empty($loanAdditionalCharge)){
+                $additionalChargeEntry = new Transactions;
+                $additionalChargeEntry->date = $disbursementDate;
+                $additionalChargeEntry->customer_id = $customerId;
+                $additionalChargeEntry->loan_id = $loanId;
+                $additionalChargeEntry->ledger_id = 3; // 3 = Additional Charge
+                $additionalChargeEntry->amount = $loanAdditionalCharge;
+                $additionalChargeEntry->status = 1;
+                $additionalChargeEntry->save();
+            }
+
+            if(!empty($productList)){
+                foreach ($productList as $key => $value) {
+                    $data = array(
+                        'loan_id' => $loanId, 
+                        'customer_id' => $customerId, 
+                        'product_id' => $value['productId'],
+                        'product_qty' => $value['productQty'],
+                        'product_weight' => $value['productWeight'],
+                        'caret_id' => $value['caretId'],
+                        'caret_percentage' => $value['caretPercentage'],
+                        'product_value' => $value['productValue'],
+                    );
+                    LoanProducts::insert($data);   
+                }
+            }
         
             return response()->json([
                 'status' => "success",
@@ -108,9 +140,19 @@ class LoanController extends Controller
      * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function show(Loan $loan)
+    public function show($id)
     {
-        //
+        $data = DB::table('loans')
+                    ->leftjoin('customers','customers.id','=','loans.customer_id')
+                    ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
+                    ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
+                    ->select('loans.id', 'loans.customer_id', 'loans.disbursement_date', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
+                    ->where('loans.loan_category_id', '=', $id)
+                    ->get();
+        return response()->json([
+            'status' => "success", 
+            'response' => $data, 
+        ], 200);
     }
 
     /**

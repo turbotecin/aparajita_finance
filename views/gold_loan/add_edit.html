@@ -55,7 +55,7 @@
                                     <div class="form-group">
                                         <label for="disbursementAmount">Disbursement Amount</label>
                                         <input type="number" class="form-control" id="disbursementAmount" ng-model="formData.disbursementAmount" readonly="readonly" aria-describedby="textHelp">
-                                        <small id="textHelp" class="form-text text-muted">Actual Loan Amount - Processing Charge</small> 
+                                        <small id="textHelp" class="form-text text-muted">Actual Loan Amount - Processing Charge - Additional Charge</small> 
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,9 @@
                                 <td>{{value.productWeight}}</td>
                                 <td>{{value.caretName}}</td>
                                 <td>{{value.productValue}}</td>
-                                <td><button type="button" class="btn fw-sm-120 mb-5 btn-danger" ng-click="removeProductRow($index)">X</button></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm" ng-click="removeProductRow($index)">Delete</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

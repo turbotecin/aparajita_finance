@@ -110,13 +110,14 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 	
 	$scope.get_data = function() 
     {
-        $http.get($rootScope.appLaravelApiUrl + '/loans')
+        // 1 = Gold Loan
+        $http.get($rootScope.appLaravelApiUrl + '/loans/1')
         .then(function(data) {
             var data = data.data;
             console.log(data);
             if (data.status == 'success') 
             {
-                $scope.cashLoanList = data.response;
+                $scope.goldLoanList = data.response;
             } 
             else if (data.status == 'error') 
             {
@@ -135,14 +136,14 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     $scope.submit_form = function() {
         $scope.formData.disbursementDate = moment($scope.formData.date).format('YYYY-MM-DD');
         console.log($scope.formData);
-        return;
+        // return;
         $http.post($rootScope.appLaravelApiUrl + '/loans', {'inputData' : $scope.formData})
         .then(function(data) 
         {
             var data = data.data;
             console.log(data);
             if (data.status == 'success') {
-                $scope.change_route("cashloan");
+                $scope.change_route("goldloan");
             } 
             else if (data.status == 'valid_error') {
                 //console.log(data.errors);
@@ -152,7 +153,7 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 
             }
 
-            if (!$rootScope.checkEmpty(data.msg)) $rootScope.showMessage(data.msg, data.status, true);
+            // if (!$rootScope.checkEmpty(data.msg)) $rootScope.showMessage(data.msg, data.status, true);
 
         }, function(response) 
         {
