@@ -1,5 +1,7 @@
 app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope', '$location', '$http', '$routeParams', function($scope, loginService, $route, $rootScope, $location, $http, $routeParams){
 	
+    console.log($routeParams, moment());
+
     if($scope.checkEmpty($routeParams.action)){
         $scope.action = "";
     }else{
@@ -77,13 +79,46 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 	$scope.get_data = function() 
     {
         // 2 = Cash Loan
-        $http.get($rootScope.appLaravelApiUrl + '/loans/2')
+        $scope.param = {};
+        $scope.param.loanCategoryId = 2;
+
+        $http.get($rootScope.appLaravelApiUrl + '/loans/2'/* , {'param' : $scope.param} */)
         .then(function(data) {
             var data = data.data;
             console.log(data);
             if (data.status == 'success') 
             {
                 $scope.cashLoanList = data.response;
+            } 
+            else if (data.status == 'error') 
+            {
+
+            }
+        }, function(response) {
+            console.log("Errror Loading ", response);
+        })
+        .catch(function onError(response) {
+
+            console.log("Network Errror ", response);
+        })
+        .finally(function() {});
+	};
+	
+	$scope.get_printData = function(loanId) 
+    {
+        // 2 = Cash Loan
+        $http.get($rootScope.appLaravelApiUrl + '/loanprint/'+loanId)
+        .then(function(data) {
+            var data = data.data;
+            console.log(data);
+            if (data.status == 'success') 
+            {
+                $scope.printData = data.response;
+                $scope.loanDetails = $scope.printData.loanDetails;
+                $scope.loanDisburseDate = moment($scope.loanDetails.disbursement_date).format("dddd, MMMM Do YYYY");
+                $scope.installmentDetails = $scope.printData.installmentDetails;
+
+                // console.log($scope.loanDetails.disbursement_date, $scope.loanDisburseDate);
             } 
             else if (data.status == 'error') 
             {
@@ -135,6 +170,8 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 
     if($scope.action == "add"){
         $scope.init_formData();
+    }else if($scope.action == "print"){
+        $scope.get_printData($routeParams.loanId);
     }else{
         $scope.get_data();
     }

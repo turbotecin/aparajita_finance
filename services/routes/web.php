@@ -22,9 +22,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/appdata', [DashboardController::class, 'list']);
 Route::resource('books', BookController::class);
 Route::resource('products', ProductController::class);
 Route::resource('customers', CustomersController::class);
 Route::resource('loans', LoanController::class);
 
-Route::get('/appdata', [DashboardController::class, 'list']);
+
+/* Route::get('loans', [LoanController::class, 'index']);
+Route::get('loans/{id}', [LoanController::class, 'show']);
+Route::post('loans', [LoanController::class, 'store']);
+Route::put('loans/{loanId}', [LoanController::class, 'update']);
+Route::delete('loans/{loanId}', [LoanController::class, 'delete']); */
+// Route::get('loans/print/{$loanId}', [LoanController::class, 'print']);
+/* Route::get('loans/print/{$loanId}', function($loanId) {
+    return $loanId;
+}); */
+
+Route::get('/loanprint/{loanId}', [LoanController::class, 'print']);

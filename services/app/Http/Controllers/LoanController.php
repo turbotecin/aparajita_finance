@@ -15,14 +15,16 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(/* Request $request */)
     {
-        /* $data = DB::table('loans')
+        /* $param = $request->param;
+        $loanCategoryId = $param['loanCategoryId'];
+        $data = DB::table('loans')
                     ->leftjoin('customers','customers.id','=','loans.customer_id')
                     ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
                     ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
                     ->select('loans.id', 'loans.customer_id', 'loans.disbursement_date', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
-                    ->where('loans.loan_category_id', '=', 2)
+                    ->where('loans.loan_category_id', '=', $loanCategoryId)
                     ->get();
         return response()->json([
             'status' => "success", 
@@ -187,5 +189,52 @@ class LoanController extends Controller
     public function destroy(Loan $loan)
     {
         //
+    }
+
+    public function print($loanId){
+        $loanDetails = DB::table('loans')
+                        ->leftjoin('customers','customers.id','=','loans.customer_id')
+                        ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
+                        ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
+                        ->select('loans.id', 'loans.customer_id', 'loans.disbursement_date', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
+                        ->where('loans.id', '=', $loanId)
+                        ->first();
+
+        // $loanAmount = 10000;
+        $loanAmount = $loanDetails->loan_amount;
+        $disburseDate = $loanDetails->disbursement_date;
+        $installment = 300;
+        $interestRate_yearly = 56;
+        $interestRate_unknown = 11.034;
+
+        $data = [];
+        for($i=52; $i>=1; $i--){
+            $nextDate = date( "d-m-Y", strtotime( "$disburseDate +1 week" ) );
+            $yearlyInterest = ($loanAmount * $interestRate_yearly) / 100;
+            $interestRate_weekly = $i / $interestRate_unknown;
+
+            $payable_interest = ($yearlyInterest * $interestRate_weekly)/100;
+            $payable_principle = $installment - $payable_interest;
+            $balance = $loanAmount - $payable_principle;
+            $data[] = array(
+                // 'opening' => $loanAmount,
+                // 'roi' => $interestRate_yearly,
+                // 'yearlyInterest' => $yearlyInterest,
+                'date' => $nextDate,
+                'installment' => number_format($installment,2),
+                'interest' => number_format($payable_interest,2),
+                'principle' => number_format($payable_principle,2),
+                'balance' => number_format($balance,2)
+            );
+            $loanAmount = $balance;
+            $disburseDate = $nextDate;
+        }
+        return response()->json([
+            'status' => "success", 
+            'response' => array(
+                'loanDetails' => $loanDetails,
+                'installmentDetails' => $data
+            ), 
+        ], 200);
     }
 }

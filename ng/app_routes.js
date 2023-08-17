@@ -8,6 +8,7 @@ app.config(function($routeProvider){
 	
 	.when('/cashloan', {templateUrl: 'views/cash_loan/list.html', controller: 'cashLoanCtrl'})
 	.when('/cashloan/:action', {templateUrl: 'views/cash_loan/add_edit.html', controller: 'cashLoanCtrl'})
+	.when('/cashloan/:action/:loanId', {templateUrl: 'views/cash_loan/print.html', controller: 'cashLoanCtrl'})
 	
 	.when('/customer', {templateUrl: 'views/customer/list.html', controller: 'customerCtrl'})
 	.when('/customer/:action', {templateUrl: 'views/customer/add_edit.html', controller: 'customerCtrl'})

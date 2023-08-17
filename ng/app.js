@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'moment-picker']);
+var app = angular.module('app', ['ngRoute', 'moment-picker', 'ngPrint']);
 
 app.run(function($rootScope, $location, loginService){
 	//prevent going to homepage if not loggedin

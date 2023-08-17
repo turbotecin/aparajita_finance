@@ -43,10 +43,10 @@
                                 {{row.name}}</br>
                                 <small>Customer ID : {{row.customer_id}}</small>
                             </td>
-                            <td style="text-align: right;">{{row.loan_amount | number: 2}}</td>
-                            <td style="text-align: right;">{{row.processing_charge | number: 2}}</td>
-                            <td style="text-align: right;">{{(row.loan_amount-row.processing_charge)|number: 2}}</td>
-                            <td style="text-align: center;">
+                            <td class="text-right">{{row.loan_amount | number: 2}}</td>
+                            <td class="text-right">{{row.processing_charge | number: 2}}</td>
+                            <td class="text-right">{{(row.loan_amount-row.processing_charge)|number: 2}}</td>
+                            <td class="text-center">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                                     <button type="button" class="btn btn-primary">Edit</button>
                                     <button type="button" class="btn btn-danger">Delete</button>
