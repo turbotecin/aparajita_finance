@@ -109,7 +109,7 @@ class DashboardController extends Controller
 
         $response['status'] = 'success';
 		$response['msg'] = '';
-		$response['response']['gold_rate'] = number_format($gold_rate[0]->rate,2);
+		$response['response']['gold_rate'] = $gold_rate[0]->rate;
 		$response['response']['products'] = $products;
 		$response['response']['carets'] = $carets;
 		// $response['response']['loan_cat'] = $loan_category_id;
@@ -127,9 +127,19 @@ class DashboardController extends Controller
     public function get_total_amount($loan_cat_name, $ledger_name){
         $loan_category_id = $this->get_loanCatId($loan_cat_name);
         $ledger_id = $this->get_ledgerId($ledger_name);
-        $amount = Transactions::where('loan_category_id', '=', $loan_category_id->id)
+
+        $query = DB::table('transactions');
+        if(!empty($loan_category_id->id)){
+            $query->where('loan_category_id', '=', $loan_category_id->id);
+        }
+        if(!empty($ledger_id->id)){
+            $query->where('ledger_id', '=', $ledger_id->id);
+        }
+        $amount = $query->sum('amount');
+
+        /* $amount = Transactions::where('loan_category_id', '=', $loan_category_id->id)
                             ->where('ledger_id', '=', $ledger_id->id)
-                            ->sum('amount');
+                            ->sum('amount'); */
         return number_format($amount,2);
     }
 

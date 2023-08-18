@@ -98,6 +98,7 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     };
 
     $scope.addProductRow = function() {
+        console.log($rootScope.appData.gold_rate);
         $scope.productRow.productValue = ($scope.productRow.productWeight * $rootScope.appData.gold_rate) * $scope.productRow.caretPercentage/100;
         $scope.formData.productList.push(angular.copy($scope.productRow));
         console.log($scope.formData.productList);

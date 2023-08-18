@@ -8,7 +8,7 @@ app.controller('cashFlowCtrl', ['$scope', 'loginService', '$route', '$rootScope'
         $scope.action = $routeParams.action;
     }
     
-    $scope.setCurPage("Cash Loan");
+    $scope.setCurPage("Cash Flow");
 	// console.log($scope.cur_page, $scope.action, moment());
 
 	if($scope.checkEmpty($rootScope.appData)){
@@ -80,15 +80,18 @@ app.controller('cashFlowCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     {
         // 2 = Cash Loan
         $scope.param = {};
-        $scope.param.loanCategoryId = 2;
+        $scope.param.fromDate = '01-08-2023';
+        $scope.param.toDate = '31-08-2023';
 
-        $http.get($rootScope.appLaravelApiUrl + '/loans/2'/* , {'param' : $scope.param} */)
+        $http.post($rootScope.appLaravelApiUrl + '/cashflow', {'param' : $scope.param})
         .then(function(data) {
             var data = data.data;
             console.log(data);
             if (data.status == 'success') 
             {
-                $scope.cashLoanList = data.response;
+                $scope.cashFlowList = data.response;
+                $scope.cashFlowExpenses = $scope.cashFlowList.expenses;
+                $scope.cashFlowIncomes = $scope.cashFlowList.incomes;
             } 
             else if (data.status == 'error') 
             {

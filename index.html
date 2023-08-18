@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="assets/js/main.js"></script>
         <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
         <title>{{appName}}</title>
     </head>
     <body id="AppController">
@@ -23,6 +24,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="alert {{showMessageClass}} alert-dismissible fade-up show" role="alert" style="position: absolute; z-index: 9999; left: 4.2rem;" ng-show="showMessageAutoHide">
+          {{showMessageText}} 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"><i class="icon mdi mdi-close" aria-hidden="true"></i></span>
+          </button>
       </div>
 
       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -52,6 +60,8 @@
 			  loadScript("ng/controllers/customerCtrl.js", type, charset);
 			  loadScript("ng/controllers/cashLoanCtrl.js", type, charset);
 			  loadScript("ng/controllers/cashFlowCtrl.js", type, charset);
+
+        loadScript("ng/main.js", type, charset);
       </script>
 
     </body>

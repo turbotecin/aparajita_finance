@@ -1,5 +1,7 @@
 app.controller('customerCtrl', ['$scope', 'loginService', '$route', '$rootScope', '$location', '$http', '$routeParams', function($scope, loginService, $route, $rootScope, $location, $http, $routeParams){
 	
+    // $rootScope.showMessage("testing the message", "error", true);
+
     if($scope.checkEmpty($routeParams.action)){
         $scope.action = "";
     }else{

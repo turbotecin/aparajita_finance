@@ -41,6 +41,13 @@ class CustomersController extends Controller
     public function store(Request $request)
     {
         $data = $request->inputData;
+        $customerName = !empty($data['customerName']) ? $data['customerName'] : "";
+        $customerAddress = !empty($data['customerAddress']) ? $data['customerAddress'] : "";
+        $customerPhoneNo = !empty($data['customerPhoneNo']) ? $data['customerPhoneNo'] : "";
+        $customerAadhar = !empty($data['customerAadhar']) ? $data['customerAadhar'] : "";
+        $customerPan = !empty($data['customerPan']) ? $data['customerPan'] : "";
+        $customerVotarNo = !empty($data['customerVotarNo']) ? $data['customerVotarNo'] : "";
+
         /* return response()->json([
             'error' => false, 
             'Customers' => $data['customerName'], 
@@ -61,12 +68,12 @@ class CustomersController extends Controller
         else
         { */
             $Customers = new Customers;
-            $Customers->name = $data['customerName'];
-            $Customers->address = $data['customerAddress'];
-            $Customers->phone_no = $data['customerPhoneNo'];
-            $Customers->aadhar_no = $data['customerAadhar'];
-            $Customers->pan_no = $data['customerPan'];
-            $Customers->votar_card_no = $data['customerVotarNo'];
+            $Customers->name = $customerName;
+            $Customers->address = $customerAddress;
+            $Customers->phone_no = $customerPhoneNo;
+            $Customers->aadhar_no = $customerAadhar;
+            $Customers->pan_no = $customerPan;
+            $Customers->votar_card_no = $customerVotarNo;
             $Customers->status = 1;
             $Customers->save();
             return response()->json([

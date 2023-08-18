@@ -1,5 +1,5 @@
 'use strict';
-app.helpers = function ($scope, $route, $rootScope, $location, $http, $routeParams) {
+app.helpers = function ($scope, $route, $rootScope, $location, $http, $routeParams, $timeout) {
 	// helper functions start
 
 	$scope.lastPath = '';
@@ -40,5 +40,31 @@ app.helpers = function ($scope, $route, $rootScope, $location, $http, $routePara
 			}
 		}
 		return false;
+	};
+
+
+	$rootScope.showMessage = function (message, type, action) {
+		// $scope.showMessage = false;
+		$scope.showMessageText = "";
+		$scope.showMessageAutoHide = action;
+		$scope.showMessageClass = "";
+		
+
+		if (type == 'error') {
+			$scope.showMessageClass = "alert-danger"
+		}
+		if (type == 'success') {
+			$scope.showMessageClass = "alert-success"
+		}
+
+		$scope.showMessageText = message;
+		// $scope.showMessage = true;
+
+
+		$timeout(function () {
+			$scope.showMessageText = '';
+			// $scope.showMessage = false;
+			$scope.showMessageAutoHide = false;
+		}, 20000);
 	};
 }

@@ -1,4 +1,5 @@
-app.config(function($routeProvider){
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+	// $locationProvider.html5Mode(true);
 	$routeProvider
 	.when('/', {templateUrl: 'views/login_new.html', controller: 'loginCtrl'})
 	.when('/home', {templateUrl: 'views/home.html', controller: 'homeCtrl'})
@@ -16,4 +17,4 @@ app.config(function($routeProvider){
 	.when('/cashflow', {templateUrl: 'views/cashflow/list.html', controller: 'cashFlowCtrl'})
 	
 	.otherwise({redirectTo: '/'});
-});
+}]);

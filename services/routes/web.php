@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\CommonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,4 @@ Route::delete('loans/{loanId}', [LoanController::class, 'delete']); */
 }); */
 
 Route::get('/loanprint/{loanId}', [LoanController::class, 'print']);
+Route::post('/cashflow/', [CommonController::class, 'list']);

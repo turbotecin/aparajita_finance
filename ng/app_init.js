@@ -1,5 +1,5 @@
 'use strict';
-app.controller('AppController', ['$scope', '$route', '$rootScope', '$location','$http', 'loginService', '$routeParams', function($scope, $route, $rootScope, $location, $http, loginService, $routeParams) 
+app.controller('AppController', ['$scope', '$route', '$rootScope', '$location','$http', 'loginService', '$routeParams', '$timeout', function($scope, $route, $rootScope, $location, $http, loginService, $routeParams, $timeout) 
 {
 	$scope.appName = "Aparajita Finance";
 	$scope.appBaseUrl = "http://127.0.0.1/www/aparajita_finance/";
@@ -15,6 +15,8 @@ app.controller('AppController', ['$scope', '$route', '$rootScope', '$location','
 		$rootScope.isSecure=true;
 	}
 	
+	
+	$scope.showMessageAutoHide = false;
 	$scope.appLoading=true;
 	$scope.debug=0;
 	$scope.Math = window.Math;
@@ -43,7 +45,7 @@ app.controller('AppController', ['$scope', '$route', '$rootScope', '$location','
 		$scope.isVisibleUserProfile = $scope.isVisibleUserProfile ? false : true;  
 	};
 
-	app.helpers($scope, $route, $rootScope, $location, $http, $routeParams);
+	app.helpers($scope, $route, $rootScope, $location, $http, $routeParams, $timeout);
 	app.basicControl($scope, $route, $rootScope, $location, $http, $routeParams);
 }]);
 
