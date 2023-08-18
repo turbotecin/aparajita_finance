@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->date('date');
             $table->integer('customer_id');
             $table->integer('loan_id');
+            $table->integer('loan_category_id');
             $table->integer('ledger_id');
             $table->bigInteger('amount');
             $table->integer('status');

@@ -1,10 +1,11 @@
 <div class="invoice-wrapper d-flex align-items-center justify-content-center">
     <div class="invoice-box fadeInDown animated">
         <div class="text-center text-sm-right">
-            <!-- <button class="btn bg-white border-color-7 fw-120 mr-10 rounded-half-circle text-color-6"><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Back</button> -->
-            <button class="btn btn-primary fw-120 rounded-half-circle" ng-print print-element-id="printThisElement"><i class="mdi mdi-near-me" aria-hidden="true"></i> Print</button>
+            <button class="btn bg-white border-color-7 fw-120 mr-10 rounded-half-circle text-color-6"  ng-click="change_route('cashloan')"><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Back</button>
+            <button class="btn btn-primary fw-120 rounded-half-circle" ng-click="PrintDIV()"><i class="mdi mdi-near-me" aria-hidden="true"></i> Print</button>
+            <!-- ng-print print-element-id="printThisElement" -->
         </div>
-        <div id="printThisElement" class="bg-white border border-color-7 px-25 py-50 px-sm-30 py-sm-80 mt-25 rounded">
+        <div id="dvContents" class="bg-white border border-color-7 px-25 py-50 px-sm-30 py-sm-80 mt-25 rounded">
             <div class="d-block d-sm-flex justify-content-between">
                 <div class="text-center text-sm-left">
                     <img class="fw-65" src="assets/images/logo.png" alt="Generic placeholder image">

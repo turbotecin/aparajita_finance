@@ -80,6 +80,7 @@ class LoanController extends Controller
             $loanDisbursementEntry->date = $disbursementDate;
             $loanDisbursementEntry->customer_id = $customerId;
             $loanDisbursementEntry->loan_id = $loanId;
+            $loanDisbursementEntry->loan_category_id = $loanCategoryId;
             $loanDisbursementEntry->ledger_id = 1; // 1 = Loan Disbursement
             $loanDisbursementEntry->amount = $loanAmount;
             $loanDisbursementEntry->status = 1;
@@ -90,6 +91,7 @@ class LoanController extends Controller
                 $processingChargeEntry->date = $disbursementDate;
                 $processingChargeEntry->customer_id = $customerId;
                 $processingChargeEntry->loan_id = $loanId;
+                $loanDisbursementEntry->loan_category_id = $loanCategoryId;
                 $processingChargeEntry->ledger_id = 2; // 2 = Processing Charge
                 $processingChargeEntry->amount = $loanProcessingCharge;
                 $processingChargeEntry->status = 1;
@@ -101,6 +103,7 @@ class LoanController extends Controller
                 $additionalChargeEntry->date = $disbursementDate;
                 $additionalChargeEntry->customer_id = $customerId;
                 $additionalChargeEntry->loan_id = $loanId;
+                $loanDisbursementEntry->loan_category_id = $loanCategoryId;
                 $additionalChargeEntry->ledger_id = 3; // 3 = Additional Charge
                 $additionalChargeEntry->amount = $loanAdditionalCharge;
                 $additionalChargeEntry->status = 1;

@@ -12,6 +12,8 @@ app.config(function($routeProvider){
 	
 	.when('/customer', {templateUrl: 'views/customer/list.html', controller: 'customerCtrl'})
 	.when('/customer/:action', {templateUrl: 'views/customer/add_edit.html', controller: 'customerCtrl'})
+
+	.when('/cashflow', {templateUrl: 'views/cashflow/list.html', controller: 'cashFlowCtrl'})
 	
 	.otherwise({redirectTo: '/'});
 });

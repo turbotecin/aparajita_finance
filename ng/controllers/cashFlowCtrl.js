@@ -1,4 +1,4 @@
-app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope', '$location', '$http', '$routeParams', '$window', function($scope, loginService, $route, $rootScope, $location, $http, $routeParams, $window){
+app.controller('cashFlowCtrl', ['$scope', 'loginService', '$route', '$rootScope', '$location', '$http', '$routeParams', '$window', function($scope, loginService, $route, $rootScope, $location, $http, $routeParams, $window){
 	
     console.log($routeParams, moment());
 

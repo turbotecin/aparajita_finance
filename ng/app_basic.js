@@ -21,6 +21,7 @@ app.basicControl = function($scope, $route, $rootScope, $location, $http, $route
                 $rootScope.appData.gold_rate = data.response.gold_rate;
                 $rootScope.appData.products = data.response.products;
                 $rootScope.appData.carets = data.response.carets;
+                $rootScope.appData.total_amount = data.response.total_amount;
                 // console.log($scope.appData);
             }
         }, function(response) {
