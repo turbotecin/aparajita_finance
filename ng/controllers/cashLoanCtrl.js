@@ -73,7 +73,9 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     }
 
     $scope.calculateDisbursementAmount = function () {
-        $scope.formData.disbursementAmount = $scope.formData.loanAmount - $scope.formData.loanProcessingCharge;
+        $scope.loanAmount = $scope.formData.loanAmount;
+        $scope.formData.loanProcessingCharge = ($scope.loanAmount * 5)/100;
+        $scope.formData.disbursementAmount = $scope.loanAmount - $scope.formData.loanProcessingCharge;
     }
 	
 	$scope.get_data = function() 

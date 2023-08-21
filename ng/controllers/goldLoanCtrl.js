@@ -35,6 +35,7 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
         $scope.formData.loanAmount = 0;
         $scope.formData.loanProcessingCharge = 0;
         $scope.formData.loanAdditionalCharge = 0;
+        $scope.formData.loanAuctionCharge = 0;
         $scope.formData.disbursementAmount = 0;
         $scope.formData.productList = [];
     }
@@ -77,7 +78,13 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
     }
 
     $scope.calculateDisbursementAmount = function () {
-        $scope.formData.disbursementAmount = $scope.formData.loanAmount - $scope.formData.loanProcessingCharge - $scope.formData.loanAdditionalCharge;
+        $scope.loanAmount = $scope.formData.loanAmount;
+        $scope.formData.loanProcessingCharge = ($scope.loanAmount * 1)/100;
+        $scope.formData.loanAdditionalCharge = ($scope.loanAmount * 0.5)/100;
+        $scope.formData.loanAuctionCharge = ($scope.loanAmount * 1)/100;
+        $scope.formData.disbursementAmount = $scope.loanAmount - $scope.formData.loanProcessingCharge;
+
+        $scope.formData.disbursementAmount = $scope.loanAmount - $scope.formData.loanProcessingCharge;
     }
 
     $scope.get_product_details = function(){

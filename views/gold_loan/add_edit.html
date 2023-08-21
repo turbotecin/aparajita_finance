@@ -10,25 +10,27 @@
                                     <div class="col-12 box-title">Customer Details</div>
                                 </div>
                                 <div class="px-15 pb-15">
-                                    <div class="form-group">
-                                        <label for="disbursementDate">Disbursement Date</label>
-                                        <input class="form-control" type="text" format="DD-MM-YYYY" ng-model="formData.date" ng-model-options="{ updateOn: 'blur' }" placeholder="Select a date..." moment-picker="formData.date">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="customerName">Aadhar/PAN/Mobile No</label>
-                                        <input type="text" class="form-control" id="customerName" ng-model="formData.customerInfo" aria-describedby="textHelp" ng-blur="getCustomerDetails()" placeholder="Enter Aadhar/PAN/Mobile No">
-                                        <small id="textHelp" class="form-text text-muted mb-20">Put Aadhar No or PAN No or Mobile No and press TAB to find the customer exist or not.</small>
-                                        <div ng-show="customerInfo">
-                                            <div ng-if="!checkEmpty(customerData)" class="alert alert-success mb-0" role="alert">
-                                                <h4 class="alert-heading">Existing Customer!</h4>
-                                                <p>
-                                                    Customer ID : {{customerData.id}}</br>
-                                                    {{customerData.name}} [{{customerData.phone_no}}]</br>
-                                                    {{customerData.address}}</br>
-                                                </p>
-                                            </div>
-                                            <div ng-if="checkEmpty(customerData)" class="alert alert-danger" role="alert">No customer found!!</div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="disbursementDate">Disbursement Date</label>
+                                            <input class="form-control" type="text" format="DD-MM-YYYY" ng-model="formData.date" ng-model-options="{ updateOn: 'blur' }" placeholder="Select a date..." moment-picker="formData.date">
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="customerName">Aadhar/PAN/Mobile No</label>
+                                            <input type="text" class="form-control" id="customerName" ng-model="formData.customerInfo" aria-describedby="textHelp" ng-blur="getCustomerDetails()" placeholder="Enter Aadhar/PAN/Mobile No">
+                                            <small id="textHelp" class="form-text text-muted mb-20">Press TAB to find the customer exist or not.</small>
+                                        </div>
+                                    </div>
+                                    <div ng-show="customerInfo">
+                                        <div ng-if="!checkEmpty(customerData)" class="alert alert-success mb-0" role="alert">
+                                            <h4 class="alert-heading">Existing Customer!</h4>
+                                            <p>
+                                                Customer ID : {{customerData.id}}</br>
+                                                {{customerData.name}} [{{customerData.phone_no}}]</br>
+                                                {{customerData.address}}</br>
+                                            </p>
+                                        </div>
+                                        <div ng-if="checkEmpty(customerData)" class="alert alert-danger" role="alert">No customer found!!</div>
                                     </div>
                                 </div>
                             </div>
@@ -42,20 +44,29 @@
                                         <input type="number" class="form-control" id="loanAmount" ng-model="formData.loanAmount" aria-describedby="textHelp" placeholder="Loan Amount" ng-change="calculateDisbursementAmount()">
                                         <small id="textHelp" class="form-text text-muted">Actual Loan Amount.</small> 
                                     </div>
-                                    <div class="form-group">
-                                        <label for="loanProcessingCharge">Processing Charge</label>
-                                        <input type="number" class="form-control" id="loanProcessingCharge" ng-model="formData.loanProcessingCharge" aria-describedby="textHelp" placeholder="Processing Charge" ng-change="calculateDisbursementAmount()">
-                                        <small id="textHelp" class="form-text text-muted">Processing charge will deduct from Actual Loan Amount at the time disbursement.</small> 
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="loanAdditionalCharge">Additional Charge</label>
+                                            <input type="number" class="form-control" id="loanAdditionalCharge" ng-model="formData.loanAdditionalCharge" aria-describedby="textHelp" placeholder="Additional Charge" readonly="readonly">
+                                            <small id="textHelp" class="form-text text-muted">Deduction, If customers miss their installments.</small> 
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="loanAuctionCharge">Auction Charge</label>
+                                            <input type="number" class="form-control" id="loanAuctionCharge" ng-model="formData.loanAuctionCharge" aria-describedby="textHelp" placeholder="Auction Charge" readonly="readonly">
+                                            <small id="textHelp" class="form-text text-muted">Deduction at the time of Selling the Product</small> 
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="loanAdditionalCharge">Additional Charge</label>
-                                        <input type="number" class="form-control" id="loanAdditionalCharge" ng-model="formData.loanAdditionalCharge" aria-describedby="textHelp" placeholder="Additional Charge" ng-change="calculateDisbursementAmount()">
-                                        <small id="textHelp" class="form-text text-muted">Additional charge will deduct from Actual Loan Amount at the time disbursement.</small> 
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="disbursementAmount">Disbursement Amount</label>
-                                        <input type="number" class="form-control" id="disbursementAmount" ng-model="formData.disbursementAmount" readonly="readonly" aria-describedby="textHelp">
-                                        <small id="textHelp" class="form-text text-muted">Actual Loan Amount - Processing Charge - Additional Charge</small> 
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="loanProcessingCharge">Processing Charge</label>
+                                            <input type="number" class="form-control" id="loanProcessingCharge" ng-model="formData.loanProcessingCharge" aria-describedby="textHelp" placeholder="Processing Charge" readonly="readonly">
+                                            <small id="textHelp" class="form-text text-muted">Deduction, at the time disbursement.</small> 
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="disbursementAmount">Disbursement Amount</label>
+                                            <input type="number" class="form-control" id="disbursementAmount" ng-model="formData.disbursementAmount" readonly="readonly" aria-describedby="textHelp">
+                                            <small id="textHelp" class="form-text text-muted">Actual Loan Amount - Processing Charge</small> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
