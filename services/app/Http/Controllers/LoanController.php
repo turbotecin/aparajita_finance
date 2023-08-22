@@ -210,25 +210,29 @@ class LoanController extends Controller
                         ->where('loans.id', '=', $loanId)
                         ->first();
 
-        // $loanAmount = 10000;
+        $tenure = 52;
+        $rateOfInterest = 56;
+        $paymentMode = 'Weekly';
         $loanAmount = $loanDetails->loan_amount;
-        $disburseDate = $loanDetails->disbursement_date;
+        $loanProcessingCharge = $loanDetails->processing_charge;
+        $loanDisbursedAmount = $loanAmount - $loanProcessingCharge;
+        $loanDisburseDate = $loanDetails->disbursement_date;
         $installment = ($loanAmount * 3)/100;
-        $interestRate_yearly = 56;
         $interestRate_unknown = 11.034;
 
         $data = [];
-        for($i=52; $i>=1; $i--){
-            $nextDate = date( "d-m-Y", strtotime( "$disburseDate +1 week" ) );
-            $yearlyInterest = ($loanAmount * $interestRate_yearly) / 100;
+        $opening = $loanAmount;
+        for($i=$tenure; $i>=1; $i--){
+            $nextDate = date( "d-m-Y", strtotime( "$loanDisburseDate +1 week" ) );
+            $yearlyInterest = ($opening * $rateOfInterest) / 100;
             $interestRate_weekly = $i / $interestRate_unknown;
 
             $payable_interest = ($yearlyInterest * $interestRate_weekly)/100;
             $payable_principle = $installment - $payable_interest;
-            $balance = $loanAmount - $payable_principle;
+            $balance = $opening - $payable_principle;
             $data[] = array(
-                // 'opening' => $loanAmount,
-                // 'roi' => $interestRate_yearly,
+                // 'opening' => $opening,
+                // 'roi' => $rateOfInterest,
                 // 'yearlyInterest' => $yearlyInterest,
                 'date' => $nextDate,
                 'installment' => number_format($installment,2),
@@ -236,13 +240,27 @@ class LoanController extends Controller
                 'principle' => number_format($payable_principle,2),
                 'balance' => number_format($balance,2)
             );
-            $loanAmount = $balance;
-            $disburseDate = $nextDate;
+            $opening = $balance;
+            $loanDisburseDate = $nextDate;
         }
         return response()->json([
             'status' => "success", 
             'response' => array(
-                'loanDetails' => $loanDetails,
+                'loanDetails' => array(
+                    'loanId' => $loanDetails->id,
+                    'loanDisburseDate' => date( "d-m-Y", strtotime($loanDisburseDate)),
+                    'customerId' => $loanDetails->customer_id,
+                    'customerName' => $loanDetails->name,
+                    'customerAddress' => $loanDetails->address,
+                    'customerPhoneNo' => $loanDetails->phone_no,
+                    'loanAmount' => number_format($loanAmount,2),
+                    'loanProcessingCharge' => number_format($loanProcessingCharge,2),
+                    'loanDisbursedAmount' => number_format($loanDisbursedAmount,2),
+                    'tenure' => $tenure,
+                    'paymentMode' => $paymentMode,
+                    'roi' => $rateOfInterest
+                ),
+                // 'loanDetails' => $loanDetails,
                 'installmentDetails' => $data
             ), 
         ], 200);
@@ -272,23 +290,24 @@ class LoanController extends Controller
         $loanDisburseDate = $loanDetails->disbursement_date;
 
         $data = [];
+        $opening = $loanAmount;
         $nextDate = $loanDisburseDate;
-        for($i=0; $i<=$tenure; $i++){
+        for($i=0; $i<$tenure; $i++){
             $date = date( "d-m-Y", strtotime( "$nextDate +1 month" ) );
-            $opening = $loanAmount;
+            // $opening = $loanAmount;
             $interest = ($opening * $rateOfInterest)/100;
             $emi = $principalRecovery + $interest;
             $closing = $opening - $principalRecovery;
             
             $data[] = array(
                 'date' => date( "M-Y", strtotime( "$nextDate +1 month" ) ),
-                // 'opening' => $loanAmount,
+                // 'opening' => $opening,
                 'principal' => number_format($principalRecovery,2),
                 'interest' => number_format($interest,2),
                 'installment' => number_format($emi,2),
                 'balance' => number_format($closing,2)
             );
-            $loanAmount = $closing;
+            $opening = $closing;
             $nextDate = $date;
         }
 

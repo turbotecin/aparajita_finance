@@ -18,66 +18,76 @@
                     <div>9330152304 | 9051394508</div>
                 </div>
             </div>
-            <div class="d-block d-sm-flex justify-content-between mt-50">
-                <div class="text-center text-sm-left">
-                    <div class="text-size-16 lh-16 font-weight-normal">CUSTOMER DETAILS</div>
-                    <div class="text-size-15 lh-16 mt-20 font-weight-normal">{{loanDetails.name}} [ID : #{{loanDetails.customer_id}}]</div>
-                    <div class="mt-10">{{loanDetails.address}}</div>
-                    <!-- <div>United States</div> -->
-                    <!-- <div class="mt-15">wade.finnegan@left4code.com</div> -->
-                    <div>{{loanDetails.phone_no}}</div>
-                </div>
-                <div class="text-center text-sm-left">
-                    <div class="text-size-16 lh-16 font-weight-normal">LOAN DETAILS</div>
-                    <div class="ml-auto mt-30 mt-sm-0">
-                        <div class="d-flex justify-content-between mt-20">
-                            <div class="">Loan Amount</div>
-                            <div class="text-right">{{loanDetails.loan_amount}}</div>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <div class="">Less : Processing Charge</div>
-                            <div class="text-right">{{loanDetails.processing_charge}}</div>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5 font-weight-normal">
-                            <div class="">Disbursed Amount</div>
-                            <div class="text-right text-size-15 lh-15 font-weight-normal">{{loanDetails.loan_amount - loanDetails.processing_charge}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center text-sm-right mt-40 mt-sm-0">
-                    <div class="d-none d-sm-block text-size-30 lh-26 font-weight-normal">Cash Loan</div>
-                    <div class="mt-20 text-size-16 lh-16 font-weight-normal">Loan No. #{{loanDetails.id}}</div>
-                    <!-- <div class="mt-5"></div> -->
-                    <div class="mt-20 text-size-16 lh-16 font-weight-normal">Disburse Date</div>
-                    <div class="mt-5">{{loanDisburseDate}}</div>
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table mt-50">
-                    <thead class="thead-light">
+            <div class="table-responsive mt-20">
+                <table class="print_design table-bordered">
+                    <thead>
                         <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col" class="text-right">Principal</th>
-                            <th scope="col" class="text-right">Int.</th>
-                            <th scope="col" class="text-right">EMI</th>
-                            <th scope="col" class="text-right">O/S</th>
-                            <th scope="col">C. Date</th>
-                            <th scope="col">R. No</th>
-                            <th scope="col" class="text-right">Amount</th>
-                            <th scope="col">Signature</th>
+                            <th style="background: #ccc;" colspan="4" class="text-center">CASH LOAN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Customer Name</td>
+                            <td>{{loanDetails.customerName}} [{{loanDetails.customerPhoneNo}}]</td>
+                            <td>Loan Amount</td>
+                            <td>{{loanDetails.loanAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Customer ID</td>
+                            <td>{{loanDetails.customerId}}</td>
+                            <td>Less : Processing Charge</td>
+                            <td>{{loanDetails.loanProcessingCharge}}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan A/c No</td>
+                            <td>{{loanDetails.loanId}}</td>
+                            <td>Disb. Amount</td>
+                            <td>{{(loanDetails.loanDisbursedAmount)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan Disb. Date</td>
+                            <td>{{loanDisburseDate}}</td>
+                            <td>ROI</td>
+                            <td>{{loanDetails.roi}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Mode</td>
+                            <td>{{loanDetails.paymentMode}}</td>
+                            <td>Tenure</td>
+                            <td>{{loanDetails.tenure}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive mt-20">
+                <table class="print_design table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="background: #ccc;" colspan="9" class="text-center">REPAYMENT SCHEDULE</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Date</th>
+                            <th class="text-right">Principal</th>
+                            <th class="text-right">Int.</th>
+                            <th class="text-right">EMI</th>
+                            <th class="text-right">O/S</th>
+                            <th>C. Date</th>
+                            <th>R. No</th>
+                            <th class="text-right">Amount</th>
+                            <th>Signature</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-if="!checkEmpty(installmentDetails)" ng-repeat="row in installmentDetails track by $index">
-                            <td class="text-nowrap">{{row.date}}</td>
-                            <td class="text-right text-nowrap">{{row.principle}}</td>
-                            <td class="text-right text-nowrap">{{row.interest}}</td>
-                            <td class="text-right text-nowrap">{{row.installment}}</td>
-                            <td class="text-right text-nowrap">{{row.balance}}</td>
-                            <td class="text-nowrap"></td>
-                            <td class="text-nowrap"></td>
-                            <td class="text-nowrap"></td>
-                            <td class="text-nowrap"></td>
+                            <td class="text-center">{{row.date}}</td>
+                            <td class="text-right ">{{row.principle}}</td>
+                            <td class="text-right ">{{row.interest}}</td>
+                            <td class="text-right ">{{row.installment}}</td>
+                            <td class="text-right ">{{row.balance}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>

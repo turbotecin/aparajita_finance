@@ -190,6 +190,7 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 
         //Append the external CSS file.
         frameDoc.document.write('<link rel="stylesheet" href="assets/css/main.css">');
+        frameDoc.document.write('<link rel="stylesheet" href="assets/css/custom.css">');
 
         //Append the DIV contents.
         frameDoc.document.write(contents);
