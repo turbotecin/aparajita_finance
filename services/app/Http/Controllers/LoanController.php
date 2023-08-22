@@ -57,12 +57,14 @@ class LoanController extends Controller
         $loanAmount = !empty($data['loanAmount']) ? $data['loanAmount'] : "";
         $loanProcessingCharge = !empty($data['loanProcessingCharge']) ? $data['loanProcessingCharge'] : "";
         $loanAdditionalCharge = !empty($data['loanAdditionalCharge']) ? $data['loanAdditionalCharge'] : "";
+        $loanAuctionCharge = !empty($data['loanAuctionCharge']) ? $data['loanAuctionCharge'] : "";
         $disbursementAmount = !empty($data['disbursementAmount']) ? $data['disbursementAmount'] : "";
         $loanCategoryId = !empty($data['loanCategoryId']) ? $data['loanCategoryId'] : "";
         $productList = !empty($data['productList']) ? $data['productList'] : "";
 
         /* return response()->json([
             'status' => "error",
+            'data' => $data, 
             'msg' => $productList 
         ], 200);
         exit; */
@@ -71,7 +73,11 @@ class LoanController extends Controller
         $Loan->disbursement_date = $disbursementDate;
         $Loan->customer_id = $customerId;
         $Loan->loan_category_id = $loanCategoryId;
+        $Loan->additional_charge = $loanAdditionalCharge;
+        $Loan->auction_charge = $loanAuctionCharge;
         $Loan->status = 1;
+
+        $gold_value = DB::table('gold_price')->select('rate')->first();
         
         if($Loan->save()){
             $loanId = $Loan->id;
@@ -91,14 +97,14 @@ class LoanController extends Controller
                 $processingChargeEntry->date = $disbursementDate;
                 $processingChargeEntry->customer_id = $customerId;
                 $processingChargeEntry->loan_id = $loanId;
-                $loanDisbursementEntry->loan_category_id = $loanCategoryId;
+                $processingChargeEntry->loan_category_id = $loanCategoryId;
                 $processingChargeEntry->ledger_id = 2; // 2 = Processing Charge
                 $processingChargeEntry->amount = $loanProcessingCharge;
                 $processingChargeEntry->status = 1;
                 $processingChargeEntry->save();
             }
 
-            if(!empty($loanAdditionalCharge)){
+            /* if(!empty($loanAdditionalCharge)){
                 $additionalChargeEntry = new Transactions;
                 $additionalChargeEntry->date = $disbursementDate;
                 $additionalChargeEntry->customer_id = $customerId;
@@ -108,7 +114,7 @@ class LoanController extends Controller
                 $additionalChargeEntry->amount = $loanAdditionalCharge;
                 $additionalChargeEntry->status = 1;
                 $additionalChargeEntry->save();
-            }
+            } */
 
             if(!empty($productList)){
                 foreach ($productList as $key => $value) {
@@ -120,6 +126,7 @@ class LoanController extends Controller
                         'product_weight' => $value['productWeight'],
                         'caret_id' => $value['caretId'],
                         'caret_percentage' => $value['caretPercentage'],
+                        'gold_value' => $gold_value->rate,
                         'product_value' => $value['productValue'],
                     );
                     LoanProducts::insert($data);   
@@ -194,19 +201,19 @@ class LoanController extends Controller
         //
     }
 
-    public function print($loanId){
+    public function cashloanprint($loanId){
         $loanDetails = DB::table('loans')
                         ->leftjoin('customers','customers.id','=','loans.customer_id')
                         ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
                         ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
-                        ->select('loans.id', 'loans.customer_id', 'loans.disbursement_date', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
+                        ->select('loans.*', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
                         ->where('loans.id', '=', $loanId)
                         ->first();
 
         // $loanAmount = 10000;
         $loanAmount = $loanDetails->loan_amount;
         $disburseDate = $loanDetails->disbursement_date;
-        $installment = 300;
+        $installment = ($loanAmount * 3)/100;
         $interestRate_yearly = 56;
         $interestRate_unknown = 11.034;
 
@@ -237,6 +244,88 @@ class LoanController extends Controller
             'response' => array(
                 'loanDetails' => $loanDetails,
                 'installmentDetails' => $data
+            ), 
+        ], 200);
+    }
+
+    public function goldloanprint($loanId){
+        $loanDetails = DB::table('loans')
+                        ->leftjoin('customers','customers.id','=','loans.customer_id')
+                        ->leftjoin('transactions as loanTrans','loanTrans.loan_id','=','loans.id')->where('loanTrans.ledger_id','=','1')
+                        ->leftjoin('transactions as processingTrans','processingTrans.loan_id','=','loans.id')->where('processingTrans.ledger_id','=','2')
+                        ->select('loans.*', 'customers.name', 'customers.address', 'customers.phone_no', 'loanTrans.amount as loan_amount', 'processingTrans.amount as processing_charge')
+                        ->where('loans.id', '=', $loanId)
+                        ->first();
+
+        // $loanAmount = 10000;
+        $principalRecovery = 5000;
+        $tenure = 18; // in months
+        $paymentMode = 'Monthly';
+        $rateOfInterest = 3; // in percentage
+
+        $loanAmount = $loanDetails->loan_amount;
+        $loanInterestAmount = ($loanAmount * $rateOfInterest)/100;
+        $loanProcessingCharge = $loanDetails->processing_charge;
+        $loanDisbursedAmount = $loanAmount - $loanProcessingCharge;
+        $loanAdditionalCharge = $loanDetails->additional_charge;
+        $loanAuctionCharge = $loanDetails->auction_charge;
+        $loanDisburseDate = $loanDetails->disbursement_date;
+
+        $data = [];
+        $nextDate = $loanDisburseDate;
+        for($i=0; $i<=$tenure; $i++){
+            $date = date( "d-m-Y", strtotime( "$nextDate +1 month" ) );
+            $opening = $loanAmount;
+            $interest = ($opening * $rateOfInterest)/100;
+            $emi = $principalRecovery + $interest;
+            $closing = $opening - $principalRecovery;
+            
+            $data[] = array(
+                'date' => date( "M-Y", strtotime( "$nextDate +1 month" ) ),
+                // 'opening' => $loanAmount,
+                'principal' => number_format($principalRecovery,2),
+                'interest' => number_format($interest,2),
+                'installment' => number_format($emi,2),
+                'balance' => number_format($closing,2)
+            );
+            $loanAmount = $closing;
+            $nextDate = $date;
+        }
+
+        
+        $loanProductDetails = DB::table('loan_products')
+                        ->leftjoin('products','products.id','=','loan_products.product_id')
+                        ->leftjoin('carets','carets.id','=','loan_products.caret_id')
+                        ->select('loan_products.*', 'products.name as product_name', 'carets.name as caret_name')
+                        ->where('loan_products.loan_id', '=', $loanId)
+                        ->get();
+
+        $gold_value = DB::table('gold_price')->select('rate')->first();
+
+        return response()->json([
+            'status' => "success", 
+            'response' => array(
+                'loanDetails' => array(
+                    'loanId' => $loanDetails->id,
+                    'loanDisburseDate' => date( "d-m-Y", strtotime($loanDisburseDate)),
+                    'customerId' => $loanDetails->customer_id,
+                    'customerName' => $loanDetails->name,
+                    'customerAddress' => $loanDetails->address,
+                    'customerPhoneNo' => $loanDetails->phone_no,
+                    'loanAmount' => number_format($loanAmount,2),
+                    'loanInterestAmount' => number_format($loanInterestAmount,2),
+                    'loanProcessingCharge' => number_format($loanProcessingCharge,2),
+                    'loanDisbursedAmount' => number_format($loanDisbursedAmount,2),
+                    'loanAdditionalCharge' => number_format($loanAdditionalCharge,2),
+                    'loanAuctionCharge' => number_format($loanAuctionCharge,2),
+                    'principalRecovery' => number_format($principalRecovery,2),
+                    'tenure' => $tenure,
+                    'paymentMode' => $paymentMode,
+                    'roi' => $rateOfInterest
+                ),
+                'installmentDetails' => $data,
+                'loanProductDetails' => $loanProductDetails,
+                // 'gold_value' => $gold_value->rate
             ), 
         ], 200);
     }

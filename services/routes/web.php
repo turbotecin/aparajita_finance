@@ -40,5 +40,6 @@ Route::delete('loans/{loanId}', [LoanController::class, 'delete']); */
     return $loanId;
 }); */
 
-Route::get('/loanprint/{loanId}', [LoanController::class, 'print']);
+Route::get('/cashloanprint/{loanId}', [LoanController::class, 'cashloanprint']);
+Route::get('/goldloanprint/{loanId}', [LoanController::class, 'goldloanprint']);
 Route::post('/cashflow/', [CommonController::class, 'list']);

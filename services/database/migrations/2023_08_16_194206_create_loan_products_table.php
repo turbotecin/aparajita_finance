@@ -22,6 +22,7 @@ class CreateLoanProductsTable extends Migration
             $table->decimal('product_weight');
             $table->integer('caret_id');
             $table->integer('caret_percentage');
+            $table->bigInteger('gold_value');
             $table->bigInteger('product_value');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();

@@ -6,6 +6,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 
 	.when('/goldloan', {templateUrl: 'views/gold_loan/list.html', controller: 'goldLoanCtrl'})
 	.when('/goldloan/:action', {templateUrl: 'views/gold_loan/add_edit.html', controller: 'goldLoanCtrl'})
+	.when('/goldloan/:action/:loanId', {templateUrl: 'views/gold_loan/print.html', controller: 'goldLoanCtrl'})
 	
 	.when('/cashloan', {templateUrl: 'views/cash_loan/list.html', controller: 'cashLoanCtrl'})
 	.when('/cashloan/:action', {templateUrl: 'views/cash_loan/add_edit.html', controller: 'cashLoanCtrl'})

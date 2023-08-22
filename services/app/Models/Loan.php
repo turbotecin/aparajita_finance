@@ -9,5 +9,5 @@ class Loan extends Model
 {
     use HasFactory;
     protected $table = 'loans';
-    protected $fillable = ['disbursement_date', 'customer_id', 'loan_category_id', 'status'];
+    protected $fillable = ['disbursement_date', 'customer_id', 'status'];
 }

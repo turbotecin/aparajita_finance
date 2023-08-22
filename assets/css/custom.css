@@ -7,3 +7,16 @@
 .border-right{
     border-right: 1px solid #e6e6e6!important;
 } */
+
+table.print_design{
+    width: 100%; 
+    border: 1px solid;
+    border-collapse: collapse;
+    display: table;
+    text-indent: initial;
+    border-spacing: 2px;
+}
+table.print_design thead th,
+table.print_design tbody td{
+    font-size: smaller;
+}

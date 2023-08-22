@@ -1,0 +1,143 @@
+<div class="invoice-wrapper d-flex align-items-center justify-content-center">
+    <div class="invoice-box fadeInDown animated">
+        <div class="text-center text-sm-right">
+            <button class="btn bg-white border-color-7 fw-120 mr-10 rounded-half-circle text-color-6"  ng-click="change_route('cashloan')"><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Back</button>
+            <button class="btn btn-primary fw-120 rounded-half-circle" ng-click="PrintDIV()"><i class="mdi mdi-near-me" aria-hidden="true"></i> Print</button>
+            <!-- ng-print print-element-id="printThisElement" -->
+        </div>
+        <div id="dvContents" class="bg-white border border-color-7 px-25 py-50 px-sm-30 py-sm-80 mt-25 rounded">
+            <div class="d-block d-sm-flex justify-content-between">
+                <div class="text-center text-sm-left">
+                    <img class="fw-65" src="assets/images/logo.png" alt="Generic placeholder image">
+                </div>
+                <div class="text-center text-sm-right mt-50 mt-sm-0">
+                    <div class="text-size-15 lh-16 font-weight-normal">APARAJITA MUTUAL FUND</div>
+                    <div class="mt-10">Krishna Nagar, Haridevpur, Kolkata - 700 104</div>
+                    <!-- <div>United States</div> -->
+                    <!-- <div class="mt-15">wiley.gladwyn@left4code.com</div> -->
+                    <div>9330152304 | 9051394508</div>
+                </div>
+            </div>
+            <div class="table-responsive mt-50">
+                <table class="print_design table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Customer Name</td>
+                            <td>{{loanDetails.customerName}}</td>
+                            <td>Loan Amount</td>
+                            <td class="text-right">{{loanDetails.loanAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Customer ID</td>
+                            <td>{{loanDetails.customerId}}</td>
+                            <td>Less : Processing Charge</td>
+                            <td class="text-right">{{loanDetails.loanProcessingCharge}}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan A/c No</td>
+                            <td>{{loanDetails.loanId}}</td>
+                            <td>Disb. Amount</td>
+                            <td class="text-right">{{loanDetails.loanDisbursedAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Loan Disb. Date</td>
+                            <td>{{loanDetails.loanDisburseDate}}</td>
+                            <td>Aucton Charge</td>
+                            <td class="text-right">{{loanDetails.loanAuctionCharge}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Mode</td>
+                            <td>{{loanDetails.paymentMode}}</td>
+                            <td>Additional Interest</td>
+                            <td class="text-right">{{loanDetails.loanAdditionalCharge}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tenure</td>
+                            <td>{{loanDetails.tenure}}</td>
+                            <td>Interest Amount</td>
+                            <td class="text-right">{{loanDetails.loanInterestAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>ROI</td>
+                            <td>{{loanDetails.roi}}%</td>
+                            <td>Principal Recovery</td>
+                            <td class="text-right">{{loanDetails.principalRecovery}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive mt-10">
+                <table class="print_design table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="background: #ccc;" colspan="7" class="text-center">DETAILS GOLD ORNAMENTS AND OTHERS </th>
+                        </tr>
+                        <tr>
+                            <th>SL</th>
+                            <th>Particulars</th>
+                            <th class="text-right">Qty</th>
+                            <th class="text-right">Gr. Weight</th>
+                            <th class="text-right">Value</th>
+                            <th class="text-right">Caret</th>
+                            <th class="text-right">Total Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="!checkEmpty(loanProductDetails)" ng-repeat="row in loanProductDetails track by $index">
+                            <td>{{$index+1}}</td>
+                            <td>{{row.product_name}}</td>
+                            <td class="text-right">{{row.product_qty}}</td>
+                            <td class="text-right">{{row.product_weight}}</td>
+                            <td class="text-right">{{row.gold_value | number:2}}</td>
+                            <td class="text-right">{{row.caret_name}}</td>
+                            <td class="text-right">{{row.product_value | number:2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive mt-10">
+                <table class="print_design table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="background: #ccc;" colspan="12" class="text-center">REPAYMENT SCHEDULE</th>
+                        </tr>
+                        <tr>
+                            <th>SL</th>
+                            <th class="text-right">Prin. Reco.</th>
+                            <th class="text-right">Int.</th>
+                            <th class="text-right">EMI</th>
+                            <th class="text-right">Prin. O/S</th>
+                            <th>C. Date</th>
+                            <th>Month</th>
+                            <th>Add. Int.</th>
+                            <th>Int. Collect</th>
+                            <th>Prin. Reco.</th>
+                            <th>Prin. O/S</th>
+                            <th>Signature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="!checkEmpty(installmentDetails)" ng-repeat="row in installmentDetails track by $index">
+                            <td>{{$index+1}}</td>
+                            <td class="text-right">{{row.principal}}</td>
+                            <td class="text-right">{{row.interest}}</td>
+                            <td class="text-right">{{row.installment}}</td>
+                            <td class="text-right">{{row.balance}}</td>
+                            <td></td>
+                            <td>{{row.date}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-10 mt-sm-10 text-center text-sm-left">
+                <div class="text-size-16 lh-16 font-weight-normal">Notes</div>
+                <div class="mt-10">Please make the payment of this invoice by transfer to the account <span class="font-weight-normal">xxxx-xxxx-xx-xxxxxxxxxxxx</span>. Thank you for your confidence in our work.</div>
+            </div>
+        </div>
+    </div>
+</div>

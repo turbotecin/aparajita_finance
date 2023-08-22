@@ -18,6 +18,8 @@ class CreateLoansTable extends Migration
             $table->date('disbursement_date');
             $table->bigInteger('customer_id');
             $table->bigInteger('loan_category_id');
+            $table->bigInteger('additional_charge');
+            $table->bigInteger('auction_charge');
             $table->integer('status');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();

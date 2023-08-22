@@ -109,7 +109,7 @@ app.controller('cashLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
 	$scope.get_printData = function(loanId) 
     {
         // 2 = Cash Loan
-        $http.get($rootScope.appLaravelApiUrl + '/loanprint/'+loanId)
+        $http.get($rootScope.appLaravelApiUrl + '/cashloanprint/'+loanId)
         .then(function(data) {
             var data = data.data;
             console.log(data);

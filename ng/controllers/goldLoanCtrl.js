@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope', '$location', '$http', '$routeParams', function($scope, loginService, $route, $rootScope, $location, $http, $routeParams){
+app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope', '$location', '$http', '$routeParams', '$window', function($scope, loginService, $route, $rootScope, $location, $http, $routeParams, $window){
 	
     if($scope.checkEmpty($routeParams.action)){
         $scope.action = "";
@@ -140,6 +140,37 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
         })
         .finally(function() {});
 	};
+	
+	$scope.get_printData = function(loanId) 
+    {
+        // 2 = Gold Loan
+        $http.get($rootScope.appLaravelApiUrl + '/goldloanprint/'+loanId)
+        .then(function(data) {
+            var data = data.data;
+            console.log(data);
+            if (data.status == 'success') 
+            {
+                $scope.printData = data.response;
+                $scope.loanDetails = $scope.printData.loanDetails;
+                $scope.loanDisburseDate = moment($scope.loanDetails.disbursement_date).format("dddd, MMMM Do YYYY");
+                $scope.installmentDetails = $scope.printData.installmentDetails;
+                $scope.loanProductDetails = $scope.printData.loanProductDetails;
+
+                // console.log($scope.loanDetails.disbursement_date, $scope.loanDisburseDate);
+            } 
+            else if (data.status == 'error') 
+            {
+
+            }
+        }, function(response) {
+            console.log("Errror Loading ", response);
+        })
+        .catch(function onError(response) {
+
+            console.log("Network Errror ", response);
+        })
+        .finally(function() {});
+	};
 
     $scope.submit_form = function() {
         $scope.formData.disbursementDate = moment($scope.formData.date).format('YYYY-MM-DD');
@@ -174,10 +205,46 @@ app.controller('goldLoanCtrl', ['$scope', 'loginService', '$route', '$rootScope'
         .finally(function() {
         });
     };
+
+    $scope.PrintDIV = function () {
+        var contents = document.getElementById("dvContents").innerHTML;
+        var body = document.getElementsByTagName("BODY")[0];
+
+        //Create a dynamic IFRAME.
+        var frame1 = document.createElement("IFRAME");
+        frame1.name = "frame1";
+        frame1.setAttribute("style", "position:absolute;top:-1000000px");
+        body.appendChild(frame1);
+
+        //Create a Frame Document.
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+
+        //Append the external CSS file.
+        frameDoc.document.write('<link rel="stylesheet" href="assets/css/main.css">');
+        frameDoc.document.write('<link rel="stylesheet" href="assets/css/custom.css">');
+
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+
+        $window.setTimeout(function () {
+            $window.frames["frame1"].focus();
+            $window.frames["frame1"].print();
+            body.removeChild(frame1);
+        }, 500);
+    };
     
     if($scope.action == "add"){
         $scope.init_formData();
         $scope.init_productRow();
+    }else if($scope.action == "print"){
+        $scope.get_printData($routeParams.loanId);
     }else{
         $scope.get_data();
     }
