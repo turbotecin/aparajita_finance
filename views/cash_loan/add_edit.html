@@ -10,9 +10,15 @@
                                     <div class="col-12 box-title">Customer Details</div>
                                 </div>
                                 <div class="px-15 pb-15">
-                                    <div class="form-group">
-                                        <label for="disbursementDate">Disbursement Date</label>
-                                        <input class="form-control" type="text" format="DD-MM-YYYY" ng-model="formData.date" ng-model-options="{ updateOn: 'blur' }" placeholder="Select a date..." moment-picker="formData.date">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="disbursementDate">Disbursement Date</label>
+                                            <input class="form-control" type="text" format="DD-MM-YYYY" ng-model="formData.date" ng-model-options="{ updateOn: 'blur' }" placeholder="Select a date..." moment-picker="formData.date">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="firstEmiDate">First EMI Date</label>
+                                            <input class="form-control" type="text" format="DD-MM-YYYY" ng-model="formData.firstEmiDate" ng-model-options="{ updateOn: 'blur' }" placeholder="Select a date..." moment-picker="formData.firstEmiDate">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="customerName">Aadhar/PAN/Mobile No</label>

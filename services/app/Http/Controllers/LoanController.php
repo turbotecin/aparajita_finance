@@ -50,24 +50,25 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
+        $gold_value = DB::table('gold_price')->select('rate')->first();
         $data = $request->inputData;
-
-        $customerId = !empty($data['customerId']) ? $data['customerId'] : "";
-        $disbursementDate = !empty($data['disbursementDate']) ? $data['disbursementDate'] : "";
-        $loanAmount = !empty($data['loanAmount']) ? $data['loanAmount'] : "";
-        $loanProcessingCharge = !empty($data['loanProcessingCharge']) ? $data['loanProcessingCharge'] : "";
-        $loanAdditionalCharge = !empty($data['loanAdditionalCharge']) ? $data['loanAdditionalCharge'] : "";
-        $loanAuctionCharge = !empty($data['loanAuctionCharge']) ? $data['loanAuctionCharge'] : "";
-        $disbursementAmount = !empty($data['disbursementAmount']) ? $data['disbursementAmount'] : "";
-        $loanCategoryId = !empty($data['loanCategoryId']) ? $data['loanCategoryId'] : "";
-        $productList = !empty($data['productList']) ? $data['productList'] : "";
-
         /* return response()->json([
             'status' => "error",
             'data' => $data, 
-            'msg' => $productList 
         ], 200);
         exit; */
+
+        $customerId = !empty($data['customerId']) ? $data['customerId'] : "";
+        $disbursementDate = !empty($data['disbursementDate']) ? $data['disbursementDate'] : "";
+        $loanAmount = !empty($data['loanAmount']) ? $data['loanAmount'] : 0;
+        $loanProcessingCharge = !empty($data['loanProcessingCharge']) ? $data['loanProcessingCharge'] : 0;
+        $loanAdditionalCharge = !empty($data['loanAdditionalCharge']) ? $data['loanAdditionalCharge'] : 0;
+        $loanAuctionCharge = !empty($data['loanAuctionCharge']) ? $data['loanAuctionCharge'] : 0;
+        $disbursementAmount = !empty($data['disbursementAmount']) ? $data['disbursementAmount'] : 0;
+        $loanCategoryId = !empty($data['loanCategoryId']) ? $data['loanCategoryId'] : "";
+        $productList = !empty($data['productList']) ? $data['productList'] : "";
+
+        
 
         $Loan = new Loan;
         $Loan->disbursement_date = $disbursementDate;
@@ -77,7 +78,7 @@ class LoanController extends Controller
         $Loan->auction_charge = $loanAuctionCharge;
         $Loan->status = 1;
 
-        $gold_value = DB::table('gold_price')->select('rate')->first();
+        
         
         if($Loan->save()){
             $loanId = $Loan->id;
@@ -276,7 +277,7 @@ class LoanController extends Controller
                         ->first();
 
         // $loanAmount = 10000;
-        $principalRecovery = 5000;
+        $principalRecovery = 0;
         $tenure = 18; // in months
         $paymentMode = 'Monthly';
         $rateOfInterest = 3; // in percentage
@@ -300,7 +301,7 @@ class LoanController extends Controller
             $closing = $opening - $principalRecovery;
             
             $data[] = array(
-                'date' => date( "M-Y", strtotime( "$nextDate +1 month" ) ),
+                'date' => date( "d-M-Y", strtotime( "$nextDate +1 month" ) ),
                 // 'opening' => $opening,
                 'principal' => number_format($principalRecovery,2),
                 'interest' => number_format($interest,2),

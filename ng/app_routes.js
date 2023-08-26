@@ -16,6 +16,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 	.when('/customer/:action', {templateUrl: 'views/customer/add_edit.html', controller: 'customerCtrl'})
 
 	.when('/cashflow', {templateUrl: 'views/cashflow/list.html', controller: 'cashFlowCtrl'})
+
+	.when('/indiamart', {templateUrl: 'views/indiamart/list.html', controller: 'indiamartCtrl'})
 	
 	.otherwise({redirectTo: '/'});
 }]);

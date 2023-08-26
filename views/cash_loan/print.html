@@ -28,7 +28,7 @@
                     <tbody>
                         <tr>
                             <td>Customer Name</td>
-                            <td>{{loanDetails.customerName}} [{{loanDetails.customerPhoneNo}}]</td>
+                            <td>{{loanDetails.customerName}}</td>
                             <td>Loan Amount</td>
                             <td>{{loanDetails.loanAmount}}</td>
                         </tr>
@@ -47,7 +47,7 @@
                         <tr>
                             <td>Loan Disb. Date</td>
                             <td>{{loanDisburseDate}}</td>
-                            <td>ROI</td>
+                            <td>First EMI Date</td>
                             <td>{{loanDetails.roi}}</td>
                         </tr>
                         <tr>
@@ -63,9 +63,10 @@
                 <table class="print_design table-bordered">
                     <thead>
                         <tr>
-                            <th style="background: #ccc;" colspan="9" class="text-center">REPAYMENT SCHEDULE</th>
+                            <th style="background: #ccc;" colspan="10" class="text-center">REPAYMENT SCHEDULE</th>
                         </tr>
                         <tr>
+                            <th class="text-center">SL</th>
                             <th class="text-center">Date</th>
                             <th class="text-right">Principal</th>
                             <th class="text-right">Int.</th>
@@ -79,6 +80,7 @@
                     </thead>
                     <tbody>
                         <tr ng-if="!checkEmpty(installmentDetails)" ng-repeat="row in installmentDetails track by $index">
+                            <td class="text-center">{{$index+1}}</td>
                             <td class="text-center">{{row.date}}</td>
                             <td class="text-right ">{{row.principle}}</td>
                             <td class="text-right ">{{row.interest}}</td>
